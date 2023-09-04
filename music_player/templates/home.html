@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'static/bulma.css' %}">
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            {% for i in songs %}
+            <div class="card has-background-link">
+                <div class="card-image pt-2">
+                    <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ i.image }}"></figure>
+                </div>
+                <div class="card-content has-text-centered">
+                    <div class="title">{{ i }}</div>
+                    <audio controls>
+                        <source src="/media/{{ i.song }}" type="audio/mp3">
+                    </audio>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+</body>
+
+</html>
