@@ -5,4 +5,5 @@ from .models import *
 def home(request):
     music = Song.objects.all()
     print('test') # TODO delete it then
+    print('test2')
     return render(request, 'home.html', {'songs':music})
