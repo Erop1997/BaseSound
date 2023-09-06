@@ -8,7 +8,5 @@ def home(request):
 
 def song(request):
     music = Song.objects.get(name='Monolit')
+    print(music.album.image)
     return render(request, 'song.html', {'song': music})
-
-
-
