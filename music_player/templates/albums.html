@@ -1,0 +1,5 @@
+{% for album in albums_list %}
+<a href="{% url 'music_player:home' %}?albums={{ albums.pk }}" class="navbar-item">
+    {{ album }}
+</a>
+{% endfor %}
