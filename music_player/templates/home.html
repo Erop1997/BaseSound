@@ -1,33 +1,21 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base_layout.html' %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'static/bulma.css' %}">
-</head>
 
-<body>
-    <div class="section">
-        <div class="container">
-            {% for i in songs %}
-            <div class="card has-background-link">
-                <div class="card-image pt-2">
-                    <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ i.image }}"></figure>
-                </div>
-                <div class="card-content has-text-centered">
-                    <div class="title">{{ i }}</div>
-                    <audio controls>
-                        <source src="/media/{{ i.song }}" type="audio/mp3">
-                    </audio>
-                </div>
-            </div>
+<div class="container">
+    {% for song in songs %}
+    <a href="{% url 'music_player:song' %}">
+    <div class="card mt-5">
+        <div class="card-image pt-2">
+            <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ song.image }}"></figure>
         </div>
-        {% endfor %}
+        <div class="card-content has-text-centered">
+            <div class="title">{{ song }}</div>
+        </div>
     </div>
-    </div>
-</body>
+    </a>
+    {% endfor %}
+</div>
+</div>
 
-</html>
+{% endblock %}
