@@ -1,4 +1,5 @@
 {% load static %}
+{% load albums %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,7 @@
               <a href="{% url 'music_player:home' %}" class="navbar-item">
                 Домой
               </a>
+              {% albums %}
               <a class="navbar-item">
                 Documentation
               </a>
