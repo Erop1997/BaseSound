@@ -1,0 +1,69 @@
+{% load static %}
+{% load albums %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'static/bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'static/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+          <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+              <a href="{% url 'music_player:home' %}" class="navbar-item">
+                Домой
+              </a>
+              <a class="navbar-item">
+                Documentation
+              </a>
+            </div>
+      
+            <div class="navbar-end">
+            
+              {% if user.is_authenticated %}
+              <div class="navbar-item has-dropdown is-hoverable">
+                  <div class="navbar-link">
+                      {{ user }}
+                  </div>
+                  <div class="navbar-dropdown">
+                      <a href="{% url 'users:reset_password' %}" class="navbar-item">
+                          Изменить пароль
+                      </a>
+                      <a class="navbar-item has-text-danger" href="{% url 'users:sign_out' %}">
+                          Выйти
+                      </a>
+                  </div>
+              </div>
+              {% else %}
+              <a class="navbar-item" href="{% url 'users:sign_in' %}">
+                  <button class="button">Войти</button>
+              </a>
+              {% endif %}  
+
+              <div class="navbar-item">
+                <div class="buttons">
+                  <a class="button is-dark">Github</a>
+                  
+                  <a href="{% url 'music_player:download' %}" class="button is-link">
+                    Download
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      {% block auth %}
+      {% endblock %}
+      
+<section class="background hero is-fullheight-with-navbar ">
+    {% block content %}
+    {% endblock %}
+</section>
+
+</body>
+</html>

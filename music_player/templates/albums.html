@@ -1,0 +1,16 @@
+<aside class="menu has-background-info-light p-3" style="min-height: 100%; border-radius: 10px;">
+    <div class="menu-label">
+        <div class="title">
+            Альбомы
+        </div>
+    </div>
+    <ul class="menu-list">
+        {% for album in albums_list %}
+        <li>
+            <a href="{% url 'music_player:home' %}?albums={{album.pk}}">
+                {{ album }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    </aside>

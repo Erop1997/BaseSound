@@ -1,0 +1,19 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+<div class="container mt-6">
+    <div class="card">
+        <div class="card-image pt-2">
+            <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ song.album.image }}"></figure>
+        </div>
+        <div class="card-content has-text-centered">
+            <div class="title">{{ song }}</div>
+            <audio controls>
+                <source src="/media/{{ song.song }}" type="audio/mp3">
+            </audio>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

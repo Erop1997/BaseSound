@@ -1,0 +1,44 @@
+{% extends 'base_layout.html' %}
+<!-- Авторизация -->
+
+
+{% block auth %}
+<div class="box has-text-centered">    
+    <form method="post">
+        <div class="title is-1">
+            Авторизация
+        </div>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="field">
+            <label for="{{ field.id_for_label }}" class="label">
+                {{field.label}}
+            </label>
+            <div for="control">
+                {{field}}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if form.errors %}
+        <ul>
+            {% for orror in form.errors.values %}
+            <li class="has-text-danger">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="has-text-centered">
+            <button class="button is-success">
+                Войти
+            </button>
+        </div>
+        <div class="content has-text-centered">
+            <span>Еще не зарегистрировались?</span>
+            <br><br>
+            <a href="{% url 'users:sign_up' %}">
+                Создать аккаунт
+            </a>
+        </div>
+    </form>
+</div>    
+{% endblock %}

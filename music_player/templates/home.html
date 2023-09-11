@@ -1,0 +1,27 @@
+{% extends 'base_layout.html' %}
+{% load albums %}
+{% block content %}
+
+<div class="columns mt-2">
+    <div class="column is-one-fifth">
+        {% albums %}
+    </div>
+    <div class="section">
+    {% for song in songs %}
+    <a href="{% url 'music_player:song' song.pk %}">
+        <div class="card mt-5 is-vcentered">
+            <div class="card-image pt-2">
+                <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ song.song_image }}"></figure>
+            </div>
+            <div class="card-content has-text-centered">
+                <div class="title">{{ song }}</div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+</div>
+</div>
+
+
+{% endblock %}
