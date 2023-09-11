@@ -10,7 +10,6 @@ def home(request):
     songs = Song.objects.all()
 
     songs = Song.objects.filter(album=albums) if albums else songs
-
     return render(request, 'home.html', {'songs':songs})
 
 def song(request,pk):
