@@ -19,13 +19,13 @@ def song(request,pk):
 
 
 @login_required(login_url='/users/sign_in')
-def download(request):
+def upload(request):
     form = SongForm(request.POST or None, request.FILES or None)
     if request.method == 'POST' and form.is_valid():
         instance = form.save(commit=False)
         instance.save()
         return redirect('music_player:home')
-    return render(request, 'download.html', {'form': form})
+    return render(request, 'upload.html', {'form': form})
 from django.shortcuts import render
 import os
 from .models import *
