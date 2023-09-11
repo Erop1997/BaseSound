@@ -7,9 +7,10 @@
         {% albums %}
     </div>
     <div class="section">
+        
     {% for song in songs %}
     <a href="{% url 'music_player:song' song.pk %}">
-        <div class="card mt-2 has-background-info-light">
+        <div class="card mt-2 has-background-link-light">
             <div class="card-image pt-2">
                 <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ song.album.album_image }}"></figure>
             </div>
