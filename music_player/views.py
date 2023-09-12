@@ -40,4 +40,11 @@ def home(request):
 
 def song(request,pk):
     music = Song.objects.get(pk=pk)
-    return render(request, 'song.html', {'song': music})
+    all_songs = list(Song.objects.all())
+    songs_dict = {}
+    for i in all_songs:
+        songs_dict['title'] = f'{i.name}'
+        songs_dict['file'] = f'/media/{i.song}'
+    songs_list = [songs_dict]
+    print(songs_list)
+    return render(request, 'song.html', {'song': music,'songs_list':songs_list})
