@@ -2,27 +2,32 @@
 {% load albums %}
 {% block content %}
 
-<div class="columns my-2">
+<div class="columns my-2" >
     <div class="column is-one-fifth">
         {% albums %}
     </div>
-    <div class="section">
-        
-    {% for song in songs %}
-    <a href="{% url 'music_player:song' song.pk %}">
-        <div class="card mt-2 has-background-link-light">
-            <div class="card-image pt-2">
-                <figure style="margin:auto;" class="image is-128x128"><img src="/media/{{ song.album.album_image }}"></figure>
+    <div class="column">
+        <div class="columns is-multiline is-centered p-4" >
+            {% for song in songs %}
+            <div class="column is-4">
+                <a href="{% url 'music_player:song' song.pk %}">
+                    <div class="card mt-2 has-background-link-light">
+                        <div class="card-image pt-2">
+                            <figure style="margin:auto;" class="image is-128x128"><img
+                                    src="/media/{{ song.album.album_image }}"></figure>
+                        </div>
+                        <div class="card-content has-text-centered">
+                            <div class="title">{{ song }}</div>
+                            <div class="subtitle">{{ song.album.singer }}</div>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="card-content has-text-centered">
-                <div class="title">{{ song }}</div>
-                <div class="subtitle">{{ song.album.singer }}</div>
-            </div>
+            {% endfor %}
         </div>
-    </a>
-    {% endfor %}
+    </div>
 </div>
-</div>
+
 
 
 
