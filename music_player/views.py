@@ -40,11 +40,12 @@ def home(request):
 
 def song(request,pk):
     music = Song.objects.get(pk=pk)
-    all_songs = list(Song.objects.all())
-    songs_dict = {}
-    for i in all_songs:
-        songs_dict['title'] = f'{i.name}'
-        songs_dict['file'] = f'/media/{i.song}'
-    songs_list = [songs_dict]
-    print(songs_list)
-    return render(request, 'song.html', {'song': music,'songs_list':songs_list})
+    # all_songs = list(Song.objects.all())
+    # songs_dict = {}
+    # songs_dict['title'] = f'{music.name}'
+    # songs_dict['file'] = f'/media/{music.song}'
+    # songs_dict['poster'] = f'/media/{music.album.album_image}'
+    # print(songs_dict)
+
+    songs_dict = {'title': 'Monolit', 'file': '/media/Loc-Dog_ATL_-_Monolit_76049608_Dn8Fvfu_lcBjeAn_9qZqfDH_8jJvAFK_SyCntFV.mp3', 'poster': '/media/ATL_995I2n5.jpeg'}
+    return render(request, 'song.html', {'song': music,'songs_dict':songs_dict})

@@ -3,13 +3,14 @@
 
 
 <div class="container mt-6 has-text-centered">
+    <script>
+        var songs_dict = "{{ songs_dict | safe }}"
+        console.log(songs_dict)                 
+        var player = new Playerjs({ id: "player", file:[{'title': 'Monolit', 'file': '/media/Loc-Dog_ATL_-_Monolit_76049608_Dn8Fvfu_lcBjeAn_9qZqfDH_8jJvAFK_SyCntFV.mp3', 'poster': '/media/ATL_995I2n5.jpeg'}]});
+    </script>
     <div class="title has-text-white">{{ song }}</div>
             <div id="player" style="width: 500px; height: 500px ;">
-                <script>
-                    var player = new Playerjs({ id: "player", file: "/media/{{ song.song }}", poster: "/media/{{ song.album.album_image }}"});
-                </script>
             </div>
 </div>
-
 
 {% endblock %}
