@@ -22,7 +22,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('music_player/', include(('music_player.urls','music_player'), namespace = 'music_player')),
-    path('users/', include(('users.urls', 'users'), namespace='users'))
+    path('users/', include(('users.urls', 'users'), namespace='users')),
+    path('staff/', include(('staff.urls', 'staff'), namespace='staff'))
 ] + staticfiles_urlpatterns()
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

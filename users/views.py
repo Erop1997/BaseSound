@@ -10,14 +10,20 @@ from django.contrib.auth import update_session_auth_hash
 # Авторизация
 def sign_in(request):
     valid_user = True
+    form = SignInForm() 
     if request.method == 'POST':
         form = SignInForm(data = request.POST)        
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+
+            if user.is_staff and not user.is_superuser:
+                return redirect('staff:home')
+            
             return redirect('music_player:home')
+        
         valid_user = False
-    form = SignInForm()    
+    # form = SignInForm()    
     return render(request, 'sign_in.html', {'form': form, 'valid_user': valid_user})
 
 
