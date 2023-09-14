@@ -9,10 +9,12 @@
     </div>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <!-- {{ form }} -->
         {% for field in form %}
         <div class="label my-2">{{ field.label }}</div>
         {{ field }}
         {% endfor %}
+
         <div class="buttons has-addons mt-4 is-centered">
             <button type="submit" class="button is-success">
                 Отправить
@@ -21,6 +23,7 @@
                 Назад
             </a>
         </div>
+        <div class="subtitle has-text-centered">После отправки ваш трек должен пройти модерацию</div>
     </form>
 </div>
 

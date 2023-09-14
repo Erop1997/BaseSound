@@ -1,0 +1,33 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="column has-text-centered">
+    <div class="title has-text-white">Создайте свой альбом:</div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in album_form %}
+        <div class="has-text-white mt-4 subtitle">{{ field.label }}</div>
+        <div style="width: 50%; margin: 0px auto;">{{ field }}</div>
+        {% endfor %}
+        <button class="button mt-4 is-link" type="submit" style="width: 25%;">Создать</button>
+    </form>
+    <div class="dropdown is-hoverable mt-4">
+        <div class="dropdown-trigger">
+          <button class="button has-background-link">
+            <span class="subtitle is-4 has-text-white">Либо выберите один из существующих альбомов</span>
+          </button>
+        </div>
+        <div class="dropdown-menu" style="width: 100%;">
+          <div class="dropdown-content">
+            {% for album in albums %}
+            <a href="{% url 'music_player:upload' album.pk %}" class="dropdown-item has-text-centered">
+              {{ album }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{% endblock %}
