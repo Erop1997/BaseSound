@@ -2,24 +2,74 @@
 {% load albums %}
 
 {% block content %}
-<div class="column">
-    <div class="columns is-multiline is-centered p-4">
-        {% for song in songs %}
-        <div class="column is-4">
-            <a href="{% url 'music_player:song' song.pk %}">
-                <div class="card mt-2 has-background-link-light">
-                    <div class="card-image pt-2">
-                        <figure style="margin:auto; width: 200px; height: 200px;" class="image"><img
-                                src="/media/{{ song.album.album_image }}"></figure>
-                    </div>
-                    <div class="card-content has-text-centered">
-                        <div class="title">{{ song }}</div>
-                        <div class="subtitle">{{ song.album.singer }}</div>
-                    </div>
-                </div>
-            </a>
+<div class="columns my-2">
+    <div class="column">
+        <div class="box has-text-centered">
+            <div class="title" href="">Заявки на добавление альбомов</div>
         </div>
-        {% endfor %}
+        <table class="table is-fullwidth has-background-link-light">
+            <thead>
+                <tr>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Название</th>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Описание</th>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Исполнитель</th>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Изображение</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for album in uploaded_albums %}
+                <tr>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered">{{ album.title }}</td>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered">{{ album.description }}</td>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered">{{ album.singer }}</td>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered"><img
+                            src="/media/{{ album.album_image }}" class="image is-128x128" style="margin: auto;"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a href="{% url 'staff:add_album' album.pk %}" class="button is-success">Перейти к добавлению</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'staff:admin' %}?action=delete_album&pk={{ album.pk }}" class="button is-danger">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="column">
+        <div class="box has-text-centered">
+            <div class="title" href="">Заявки на добавление треков</div>
+        </div>
+        <table class="table is-fullwidth has-background-link-light">
+            <thead>
+                <tr>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Название</th>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Трек</th>
+                    <th style="border: 4px solid black" class="subtitle has-text-centered">Загружается в альбом</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for track in uploaded_tracks %}
+                <tr>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered">{{ track.name }}</td>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered">{{ track.song }}</td>
+                    <td style="border: 4px solid black" class="subtitle has-text-centered">{% if track.album.is_uploaded == False %} {{ track.album.title }} (Не загружен в продакшн) {% else %} <a href="{% url 'music_player:home' %}?albums={{track.album.pk}}">{{ track.album.title }}</a> {% endif %}</td>    
+                </tr>
+                <tr>
+                    <td>   
+                    </td>
+                    <td>
+                        <a href="{% url 'staff:admin' %}?action=add_track&pk={{track.pk}}" class="button is-success">Добавить</a>
+                        <a href="{% url 'staff:admin' %}?action=delete_track&pk={{track.pk}}" class="button is-danger">Удалить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}

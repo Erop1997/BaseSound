@@ -17,5 +17,5 @@ class AlbumForm(forms.ModelForm):
     album_image = forms.ImageField(label='Изображение альбома')
 
     class Meta:
-        model = Uploaded_Album
+        model = Album
         fields = ['title','description','singer','album_image']

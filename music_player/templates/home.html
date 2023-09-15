@@ -13,8 +13,7 @@
                     <a href="{% url 'music_player:song' song.pk %}">
                         <div class="card mt-2 has-background-link-light">
                             <div class="card-image pt-2">
-                                <figure style="margin:auto; width: 200px; height: 200px;" class="image"><img
-                                        src="/media/{{ song.album.album_image }}"></figure>
+                                <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ song.album.album_image }}">
                             </div>
                             <div class="card-content has-text-centered">
                                 <div class="title">{{ song }}</div>
