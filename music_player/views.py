@@ -11,17 +11,25 @@ from .forms import *
 def home(request):
     albums = request.GET.get('albums')
     songs = Song.objects.all()
+    my_songs = request.GET.get('add_my')
     search = request.GET.get('search')
     songs = Song.objects.filter(album=albums) if albums else songs
+    songs = songs.filter(add_my=request.user) if my_songs else songs
 
     if search:
         songs = Song.objects.filter(
             Q(name__icontains=search)
             )
         return render(request, 'home.html', {'songs':songs, 'albums':albums})
-
     
     return render(request, 'home.html', {'songs':songs})
+
+def added(request,pk):
+    song_data = Song.objects.get(pk=pk)
+
+    song_data.add_my.add(request.user) if request.user not in song_data.add_my.all() \
+        else song_data.add_my.remove(request.user)
+    return redirect('music_player:home')
 
 def song(request,pk):
     music = Song.objects.get(pk=pk)

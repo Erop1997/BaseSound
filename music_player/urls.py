@@ -6,4 +6,5 @@ urlpatterns = [
     path('song<int:pk>/', views.song , name='song'),
     path('upload/<int:pk>', views.upload , name='upload'),
     path('choosing_album/', views.choosing_album , name='choosing_album'),
+    path('added/<int:pk>', views.added, name='added')
 ]
