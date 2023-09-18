@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 import os
 from .models import *
 from staff.models import *
+from django.db.models import Q
 
 from .forms import *
 
@@ -10,8 +11,16 @@ from .forms import *
 def home(request):
     albums = request.GET.get('albums')
     songs = Song.objects.all()
-
+    search = request.GET.get('search')
     songs = Song.objects.filter(album=albums) if albums else songs
+
+    if search:
+        songs = Song.objects.filter(
+            Q(name__icontains=search)
+            )
+        return render(request, 'home.html', {'songs':songs, 'albums':albums})
+
+    
     return render(request, 'home.html', {'songs':songs})
 
 def song(request,pk):
