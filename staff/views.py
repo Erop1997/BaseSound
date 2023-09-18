@@ -17,16 +17,45 @@ def admin(request):
 
 
 def add_album(request, pk):
-    
-    return render(request, 'add_album.html')
+    action = request.GET.get('action')
+    primary_key = request.GET.get('pk')
+    uploaded_album = Album.objects.get(pk=pk)
+    uploaded_tracks = Uploaded_Song.objects.filter(album = uploaded_album)
+    list_playlist = []
+
+    if action:
+        actions(action, primary_key)
+
+    for song in uploaded_tracks:
+        playlist = {}
+        playlist['title'] = f'{song.name}'
+        playlist['file'] = f'/media/{song.song}'
+        playlist['poster'] = f'/media/{song.album.album_image}'
+        list_playlist.append(playlist)
+    return render(request, 'add_album.html', {'uploaded_album':uploaded_album, 'uploaded_tracks':uploaded_tracks, 'list_playlist':list_playlist})
 
 def actions(action, pk):
     match action:
         case 'add_track':
-            track = Uploaded_Song.objects.get(pk=pk)
-            Song.objects.create(name = track.name, song = track.song, album = track.album)
-            track.delete()
+            Song.objects.create(name = uploaded_song.name, song = uploaded_song.song, album = uploaded_song.album)
+            uploaded_song.delete()
         case 'delete_track':
             Uploaded_Song.objects.get(pk=pk).delete()
         case 'delete_album':
             Album.objects.get(pk=pk).delete()
+        case 'choose':
+            uploaded_song = Uploaded_Song.objects.get(pk=pk)
+            uploaded_song.chosen = True 
+            uploaded_song.save()
+        case 'unchoose':
+            uploaded_song = Uploaded_Song.objects.get(pk=pk)
+            uploaded_song.chosen = False
+            uploaded_song.save()
+        case 'choose_all':
+            album = Album.objects.get(pk=pk)
+            uploaded_song = Uploaded_Song.objects.filter(album=album)
+            uploaded_song.update(chosen=True)
+        case 'unchoose_all':
+            album = Album.objects.get(pk=pk)
+            uploaded_song = Uploaded_Song.objects.filter(album=album)
+            uploaded_song.update(chosen=False)
