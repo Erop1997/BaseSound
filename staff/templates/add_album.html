@@ -1,5 +1,40 @@
 {% extends 'admin_layout.html' %}
 
 {% block content %}
-<h1>Привет</h1>
+<div class="box has-background-link-light">
+    <div class="title has-text-centered">Добавляемый альбом: {{ uploaded_album }}</div>
+    <div class="columns">
+        <div class="column">
+            <div class="box">
+                <div class="buttons">
+                    <a class="button is-primary" href="{% url 'staff:add_album' uploaded_album.pk %}?action=choose_all&pk={{ uploaded_album.pk }}">Выбрать все</a>
+                    <div class="button"></div>
+                    <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=unchoose_all&pk={{ uploaded_album.pk }}" class="button">Снять выбор</a>
+                </div>
+
+                <ul>
+                    {% for song in uploaded_tracks %}
+                    <li class="is-size-5">
+                        {% if song.chosen %}
+                        <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=unchoose&pk={{ song.pk }}"><ion-icon name="checkbox"></ion-icon></a>
+                        {% else %}
+                        <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=choose&pk={{ song.pk }}"><ion-icon name="square-outline"></ion-icon></a>
+                        {% endif %}
+                        &nbsp;
+                        {{ song }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="column">
+            <script>
+                var player = new Playerjs({ id: "player", file: {{ list_playlist | safe}}});
+            </script>
+            <div id="player" style="width: 500px; height: 500px ;">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock %}
