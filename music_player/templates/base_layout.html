@@ -64,6 +64,11 @@
             <a href="{% url 'music_player:choosing_album' %}" class="button is-link">
               Upload
             </a>
+            {% if user.my_songs.all %}
+            <a href="{% url 'music_player:home' %}?add_my=True" class="has-text-white">
+              Моя музыка
+            </a>
+            {% endif %}
           </div>
         </div>
       </div>

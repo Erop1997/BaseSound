@@ -18,6 +18,11 @@
                             <div class="card-content has-text-centered">
                                 <div class="title">{{ song }}</div>
                                 <div class="subtitle">{{ song.album.singer }}</div>
+
+                                <a href="{% url 'music_player:added' song.pk %}"
+                                        class="button {% if user in song.my_songs.all %} is-success {% endif %}">
+                                        <ion-icon name="add-outline"></ion-icon>
+                                </a>
                             </div>
                         </div>
                     </a>
