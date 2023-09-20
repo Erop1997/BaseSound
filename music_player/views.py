@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-import os
 from .models import *
 from staff.models import *
 from django.db.models import Q
@@ -9,20 +8,8 @@ from .forms import *
 
 
 def home(request):
-    albums = request.GET.get('albums')
-    songs = Song.objects.all()
-    my_songs = request.GET.get('add_my')
-    search = request.GET.get('search')
-    songs = Song.objects.filter(album=albums) if albums else songs
-    songs = songs.filter(add_my=request.user) if my_songs else songs
 
-    if search:
-        songs = Song.objects.filter(
-            Q(name__icontains=search)
-            )
-        return render(request, 'home.html', {'songs':songs, 'albums':albums})
-
-    return render(request, 'home.html', {'songs':songs})
+    return render(request, 'home.html', {})
 
 
 def added(request,pk):
@@ -30,13 +17,36 @@ def added(request,pk):
 
     song_data.add_my.add(request.user) if request.user not in song_data.add_my.all() \
         else song_data.add_my.remove(request.user)
-    return redirect('music_player:home')
-
+    return redirect('http://127.0.0.1:8000/music_player/home/?homepage=tracks')
+# Что тут добавить в редирект?
+def songs(request):
+    songs_list = Song.objects.all()
+    my_songs = request.GET.get('add_my')
+    songs_list = Song.objects.filter(add_my=request.user) if my_songs else songs_list
+    return render(request, 'songs.html', {'songs_list':songs_list})
 
 def song(request,pk):
     music = Song.objects.get(pk=pk)
     
     return render(request, 'song.html', {'song': music})
+
+def albums(request):
+    albums_list = Album.objects.filter(is_uploaded = True)
+    return render(request, 'albums.html', {'albums_list':albums_list})
+
+def album(request,pk):
+    album = Album.objects.get(pk=pk)
+    
+    return render(request, 'album.html', {'album': album})
+
+def singers(request):
+    singers_list = Singer.objects.all()
+    return render(request, 'singers.html', {'singers_list':singers_list})
+
+def singer(request, singer):
+    singer_albums = Album.objects.filter(singer=singer)
+
+    return render(request, 'singer.html', {'singer_albums': singer_albums})
 
 
 @login_required(login_url='/users/sign_in')

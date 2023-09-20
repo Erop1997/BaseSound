@@ -1,16 +1,25 @@
-<aside class="menu has-background-link-light p-3" style="min-height: 100%; border-radius: 10px;">
-    <div class="menu-label">
-        <div class="title">
-            Альбомы
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="columns my-2">
+    <div class="column">
+        <div class="columns is-multiline is-centered p-4">
+            {% for album in albums_list %}
+                <div class="column is-4">
+                    <a href="{% url 'music_player:album' album.pk %}">
+                        <div class="card mt-2 has-background-link-light">
+                            <div class="card-image pt-2">
+                                <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ album.album_image }}">
+                            </div>
+                            <div class="card-content has-text-centered">
+                                <div class="title">{{ album }}</div>
+                                <div class="subtitle">{{ song.album.singer }}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}  
         </div>
     </div>
-    <ul class="menu-list">
-        {% for album in albums_list %}
-        <li>
-            <a href="{% url 'music_player:home' %}?albums={{album.pk}}">
-                {{ album }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    </aside>
+</div>
+{% endblock %}

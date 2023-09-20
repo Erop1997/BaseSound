@@ -1,43 +1,5 @@
 {% extends 'base_layout.html' %}
-{% load albums %}
+
 {% block content %}
-
-<div class="columns my-2">
-    <div class="column is-one-fifth">
-        {% albums %}
-    </div>
-    <div class="column">
-        <div class="columns is-multiline is-centered p-4">
-            {% for song in songs %}
-                <div class="column is-4">
-                    <a href="{% url 'music_player:song' song.pk %}">
-                        <div class="card mt-2 has-background-link-light">
-                            <div class="card-image pt-2">
-                                <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ song.album.album_image }}">
-                            </div>
-                            <div class="card-content has-text-centered">
-                                <div class="title">{{ song }}</div>
-                                <div class="subtitle">{{ song.album.singer }}</div>
-                                {% if request.user in song.add_my.all %}
-                                <a href="{% url 'music_player:added' song.pk %}" class="button mt-2 is-link">
-                                <div class="subtitle has-text-white" style="margin: auto;">Удалить из 'Моей музыки'</div>
-                                <ion-icon name="checkmark-done-outline"></ion-icon>
-                                </a>
-                                {% else %}
-                                <a href="{% url 'music_player:added' song.pk %}" class="button has-background-link-light mt-2">
-                                <div class="subtitle" style="margin: auto;">Добавить в 'Мою музыку'</div>
-                                <ion-icon name="checkmark-outline"></ion-icon></a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}  
-        </div>
-    </div>
-</div>
-
-
-
 
 {% endblock %}

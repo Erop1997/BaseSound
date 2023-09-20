@@ -1,5 +1,4 @@
 {% load static %}
-{% load albums %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,17 +23,31 @@
             Домой
           </a>
         </div>
-
+        <div class="navbar-item">
+          <a href="{% url 'music_player:singers' %}" class="button is-link">
+            Исполнители
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a href="{% url 'music_player:albums' %}" class="button is-link">
+            Альбомы
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a href="{% url 'music_player:songs' %}" class="button is-link">
+            Треки
+          </a>
+        </div>
+<!-- 
         <form method="get" class="mt-2">
           <div class="control is-flex">
             <input type="search" class="input" placeholder="Найти трек по названию" name="search" style="width: 220px;">
             <button type="submit" class="button"><ion-icon name="search"></ion-icon></button>
           </div>
-        </form>
+        </form> -->
 
 
         <div class="navbar-end">
-
           {% if user.is_authenticated %}
           <div class="navbar-item has-dropdown is-hoverable">
             <div class="navbar-link">
@@ -65,7 +78,7 @@
               Upload
             </a>
             {% if user.my_songs.all %}
-            <a href="{% url 'music_player:home' %}?add_my=True" class="button is-link">
+            <a href="{% url 'music_player:home' %}?homepage=tracks&add_my=True" class="button is-link">
               Моя музыка
             </a>
             {% endif %}
