@@ -8,7 +8,6 @@
             <div class="box">
                 <div class="buttons">
                     <a class="button is-primary" href="{% url 'staff:add_album' uploaded_album.pk %}?action=choose_all&pk={{ uploaded_album.pk }}">Выбрать все</a>
-                    <div class="button"></div>
                     <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=unchoose_all&pk={{ uploaded_album.pk }}" class="button">Снять выбор</a>
                 </div>
 
@@ -34,6 +33,9 @@
             <div id="player" style="width: 500px; height: 500px ;">
             </div>
         </div>
+    </div>
+    <div class="buttons">
+        <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=add_alb&pk={{ uploaded_album.pk }}" class="button is-primary">Добавить альбом с выбранными треками</a>
     </div>
 </div>
 </div>
