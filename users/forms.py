@@ -16,10 +16,18 @@ class SignUpForm(UserCreationForm):
    password1 = forms.CharField(widget=forms.PasswordInput(), label='Придумайте пароль')          
    password2 = forms.CharField(widget=forms.PasswordInput(), label='Повторите пароль')
    email = forms.EmailField(label='Введите адресс эл.почты')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8ed314e (1)
 
    class Meta:
        model = User
        fields = ['username', 'password1', 'password2', 'email']  
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8ed314e (1)
 
 class ResetPasswordForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput(), label='Текущий пароль')
@@ -28,4 +36,9 @@ class ResetPasswordForm(PasswordChangeForm):
 
     class Meta:
         model = User
+<<<<<<< HEAD
         fields = ['old_password', 'new_password1', 'new_password2'] 
+=======
+        fields = ['old_password', 'new_password1', 'new_password2'] 
+
+>>>>>>> 8ed314e (1)
