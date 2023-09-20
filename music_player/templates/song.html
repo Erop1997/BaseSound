@@ -3,7 +3,7 @@
 
 
 <div class="container mt-6 has-text-centered">
-    <div class="title has-text-white">{{ song }}</div>
+    <div class="box has-background-link-light"><div class="title is-size-5">"{{ song }}" из альбома - <a href="{% url 'music_player:home' %}">"{{ song.album }}"</a></div></div>
     <script>
         var player = new Playerjs({ id: "player", file: "/media/{{song.song}}", poster: "/media/{{song.album.album_image}}"});
     </script>

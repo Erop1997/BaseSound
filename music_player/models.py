@@ -31,6 +31,7 @@ class Uploaded_Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='uploaded_songs', null=True, blank=True)
     name = models.CharField(max_length=255)
     song = models.FileField()
+    chosen = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
