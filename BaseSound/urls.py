@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """BaseSound URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -28,17 +27,3 @@ urlpatterns = [
 ] + staticfiles_urlpatterns()
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
-=======
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('music_player/', include(('music_player.urls','music_player'), namespace = 'music_player'))
-] + staticfiles_urlpatterns()
-
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
->>>>>>> b86369d7d518cab58d85c462a8cf8ccdd3e30ec5

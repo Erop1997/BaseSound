@@ -52,25 +52,6 @@
               <a class="navbar-item has-text-danger" href="{% url 'users:sign_out' %}">
                 Выйти
               </a>
-    <nav class="navbar">
-      <div class="container">
-        <div id="navMenu" class="navbar-menu">
-          <div class="navbar-start">
-            <a href="{% url 'music_player:home' %}" class="navbar-item">
-              Домой
-            </a>
-            {% albums %}
-            <a class="navbar-item">
-              Documentation
-            </a>
-          </div>
-    
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-dark">Github</a>
-                <a class="button is-link">Download</a>
-              </div>
             </div>
           </div>
           {% else %}
@@ -83,20 +64,14 @@
             <a href="{% url 'music_player:choosing_album' %}" class="button is-link">
               Upload
             </a>
-
-            {% if user.my_songs.all %}
-            <a href="{% url 'music_player:home' %}?add_my=True">
-              Моя музыка
-            </a>
-            {% endif %}
           </div>
         </div>
       </div>
-    </nav>
-    {% block auth %}
-    {% endblock %}
-      
-<section class="background hero is-fullheight-with-navbar ">
+    </div>
+    </div>
+  </nav>
+
+  <section class="background hero is-fullheight-with-navbar ">
     {% block content %}
     {% endblock %}
   </section>
