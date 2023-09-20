@@ -22,10 +22,20 @@ def add_album(request, pk):
     uploaded_album = Album.objects.get(pk=pk)
     uploaded_tracks = Uploaded_Song.objects.filter(album = uploaded_album)
     list_playlist = []
+    
 
-    if action:
+    if action == 'add_alb':
+            uploaded_album = Album.objects.get(pk=pk)
+            uploaded_album.is_uploaded = True
+            uploaded_album.save()
+            uploaded_songs = Uploaded_Song.objects.filter(album=uploaded_album)
+            for song in uploaded_songs:
+                Song.objects.create(name = song.name, song = song.song, album = uploaded_album)
+                song.delete()
+            return redirect('staff:admin')
+    elif action:
         actions(action, primary_key)
-        return redirect('staff:admin')
+        return redirect('staff:add_album', pk=pk)
 
     for song in uploaded_tracks:
         playlist = {}
@@ -60,11 +70,3 @@ def actions(action, pk):
             album = Album.objects.get(pk=pk)
             uploaded_song = Uploaded_Song.objects.filter(album=album)
             uploaded_song.update(chosen=False)
-        case 'add_alb':
-            uploaded_album = Album.objects.get(pk=pk)
-            uploaded_album.is_uploaded = True
-            uploaded_album.save()
-            uploaded_songs = Uploaded_Song.objects.filter(album=uploaded_album)
-            for song in uploaded_songs:
-                Song.objects.create(name = song.name, song = song.song, album = uploaded_album)
-                song.delete()
