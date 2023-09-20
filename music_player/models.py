@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Album(models.Model):
     title = models.CharField(max_length=255)
@@ -20,6 +21,7 @@ class Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='songs', null=True, blank=True)
     name = models.CharField(max_length=255)
     song = models.FileField()
+    add_my = models.ManyToManyField(User, related_name='my_songs')
 
     def __str__(self):
         return self.name
