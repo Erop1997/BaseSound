@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 import os
@@ -60,27 +59,4 @@ def choosing_album(request):
         return redirect(f'music_player:upload', pk=created_album.pk )
     
     return render(request, 'choosing_album.html', {'albums':albums, 'album_form': album_form})
-=======
-from django.shortcuts import render
-import os
-from .models import *
 
-
-def home(request):
-    albums = request.GET.get('albums')
-    songs = Song.objects.all()
-
-    songs = Song.objects.filter(album=albums) if albums else songs
-
-    return render(request, 'home.html', {'songs':songs})
-
-<<<<<<< HEAD
-
-def song(request):
-    music = Song.objects.get(name='Monolit')
-=======
-def song(request,pk):
-    music = Song.objects.get(pk=pk)
->>>>>>> 634be568656fb55ffb14a9a1b1c5e141c338dbed
-    return render(request, 'song.html', {'song': music})
->>>>>>> b86369d7d518cab58d85c462a8cf8ccdd3e30ec5
