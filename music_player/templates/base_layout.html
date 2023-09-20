@@ -78,7 +78,7 @@
               Upload
             </a>
             {% if user.my_songs.all %}
-            <a href="{% url 'music_player:home' %}?homepage=tracks&add_my=True" class="button is-link">
+            <a href="{% url 'music_player:songs' %}?add_my=True" class="button is-link">
               Моя музыка
             </a>
             {% endif %}

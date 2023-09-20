@@ -17,7 +17,7 @@ def added(request,pk):
 
     song_data.add_my.add(request.user) if request.user not in song_data.add_my.all() \
         else song_data.add_my.remove(request.user)
-    return redirect('http://127.0.0.1:8000/music_player/home/?homepage=tracks')
+    return redirect('music_player:songs')
 # Что тут добавить в редирект?
 def songs(request):
     songs_list = Song.objects.all()

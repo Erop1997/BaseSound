@@ -7,7 +7,7 @@ class Album(models.Model):
     description = models.TextField()
     album_image = models.ImageField(default='ATL.jpeg')
     is_uploaded = models.BooleanField(default=False)
-    album_singer = models.ForeignKey('music_player.Singer',related_name='album_singer', on_delete=models.CASCADE)
+    album_singer = models.ForeignKey('music_player.Singer',related_name='album_singer', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         if len(self.songs.all()) > 1 or len(self.uploaded_songs.all()) > 1:
@@ -21,7 +21,7 @@ class Song(models.Model):
     name = models.CharField(max_length=255)
     song = models.FileField()
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
-    song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE)
+    song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
