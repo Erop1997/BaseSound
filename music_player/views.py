@@ -8,8 +8,10 @@ from .forms import *
 
 
 def home(request):
-
-    return render(request, 'home.html', {})
+    songs = Song.objects.all()
+    songs_new = Song.objects.order_by('-add_my')
+    length = len(songs)-1
+    return render(request, 'home.html', {'songs':songs, 'songs_new':songs_new, 'length':length})
 
 
 def added(request,pk):
