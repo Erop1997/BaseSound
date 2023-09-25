@@ -38,9 +38,16 @@ def albums(request):
 
 def album(request,pk):
     album = Album.objects.get(pk=pk)
-    song_album_list = Song.objects.filter(pk=album.pk)
-    
-    return render(request, 'album.html', {'album': album, 'song_album_list':song_album_list})
+    list_playlist = []
+
+    for song in album.songs.all():
+        playlist = {}
+        playlist['title'] = f'{song.name}'
+        playlist['file'] = f'/media/{song.song}'
+        playlist['poster'] = f'/media/{song.album.album_image}'
+        list_playlist.append(playlist)
+
+    return render(request, 'album.html', {'album': album, 'list_playlist':list_playlist})
 
 def singers(request):
     singers_list = Singer.objects.all()
