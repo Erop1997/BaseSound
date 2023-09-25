@@ -8,8 +8,10 @@ from .forms import *
 
 
 def home(request):
-
-    return render(request, 'home.html', {})
+    songs = Song.objects.all()
+    songs_new = Song.objects.order_by('-add_my')
+    length = len(songs)-1
+    return render(request, 'home.html', {'songs':songs, 'songs_new':songs_new, 'length':length})
 
 
 def added(request,pk):
@@ -18,7 +20,8 @@ def added(request,pk):
     song_data.add_my.add(request.user) if request.user not in song_data.add_my.all() \
         else song_data.add_my.remove(request.user)
     return redirect('music_player:songs')
-# Что тут добавить в редирект?
+
+
 def songs(request):
     songs_list = Song.objects.all()
     my_songs = request.GET.get('add_my')
