@@ -16,13 +16,12 @@
                                 <div class="subtitle">{{ song.song_singer }}</div>
                                 {% if request.user in song.add_my.all %}
                                 <a href="{% url 'music_player:added' song.pk %}" class="button mt-2 is-link">
-                                <div class="subtitle has-text-white" style="margin: auto;">Удалить из 'Моей музыки'</div>
-                                <ion-icon name="checkmark-done-outline"></ion-icon>
+                                    <ion-icon name="checkmark-outline"></ion-icon>
                                 </a>
                                 {% else %}
-                                <a href="{% url 'music_player:added' song.pk %}" class="button has-background-link-light mt-2">
-                                <div class="subtitle" style="margin: auto;">Добавить в 'Мою музыку'</div>
-                                <ion-icon name="checkmark-outline"></ion-icon></a>
+                                <a href="{% url 'music_player:added' song.pk %}" class="button has-background-link-light mt-2">   
+                                    <ion-icon name="add-outline"></ion-icon>
+                                </a>    
                                 {% endif %}
                             </div>
                         </div>
