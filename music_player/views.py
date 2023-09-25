@@ -36,9 +36,9 @@ def albums(request):
 
 def album(request,pk):
     album = Album.objects.get(pk=pk)
-
+    song_album_list = Song.objects.filter(pk=album.pk)
     
-    return render(request, 'album.html', {'album': album})
+    return render(request, 'album.html', {'album': album, 'song_album_list':song_album_list})
 
 def singers(request):
     singers_list = Singer.objects.all()
