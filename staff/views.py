@@ -30,7 +30,7 @@ def add_album(request, pk):
             uploaded_album.save()
             uploaded_songs = Uploaded_Song.objects.filter(album=uploaded_album)
             for song in uploaded_songs:
-                Song.objects.create(name = song.name, song = song.song, album = uploaded_album)
+                Song.objects.create(name = song.name, song = song.song, album = song.album, song_singer = song.album.album_singer)
                 song.delete()
             return redirect('staff:admin')
     elif action:
@@ -48,7 +48,8 @@ def add_album(request, pk):
 def actions(action, pk):
     match action:
         case 'add_track':
-            Song.objects.create(name = uploaded_song.name, song = uploaded_song.song, album = uploaded_song.album)
+            uploaded_song = Uploaded_Song.objects.get(pk=pk)
+            Song.objects.create(name = uploaded_song.name, song = uploaded_song.song, album = uploaded_song.album, song_singer = uploaded_song.album.album_singer)
             uploaded_song.delete()
         case 'delete_track':
             Uploaded_Song.objects.get(pk=pk).delete()

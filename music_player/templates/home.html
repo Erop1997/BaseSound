@@ -1,5 +1,43 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
-
+<div class="container-slide">
+    <div class="title has-text-white has-text-centered is-family-sans-serif mt-2">Новые треки</div>
+    <div id="carousel-demo" class="carousel">
+        {% for song in songs %}
+        <div class="item-1 mx-4">
+            <div class="card mt-2 has-background-link-light">
+                <div class="card-image pt-2">
+                    <img class="image" style="margin: auto; width: 200px; height: 200px;"
+                        src="/media/{{ song.album.album_image }}">
+                </div>
+                <div class="card-content has-text-centered">
+                    <div class="title">{{ song }}</div>
+                    <div class="subtitle">{{ song.song_singer }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="container-slide">
+    <div class="title has-text-white has-text-centered mt-4">Популярные треки</div>
+    <div id="carousel-demo" class="carousel">
+        {% for song in songs_new %}
+        <div class="item-1 mx-4">
+            <div class="card mt-2 has-background-link-light">
+                <div class="card-image pt-2">
+                    <img class="image" style="margin: auto; width: 200px; height: 200px;"
+                        src="/media/{{ song.album.album_image }}">
+                </div>
+                <div class="card-content has-text-centered">
+                    <div class="title">{{ song }}</div>
+                    <div class="subtitle">{{ song.song_singer }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
 {% endblock %}
