@@ -36,6 +36,7 @@ def albums(request):
 
 def album(request,pk):
     album = Album.objects.get(pk=pk)
+
     
     return render(request, 'album.html', {'album': album})
 
