@@ -8,10 +8,10 @@ from .forms import *
 
 @login_required(login_url='/users/sign_in')
 def home(request):
-    songs = Song.objects.all()
-    songs_new = Song.objects.order_by('-add_my')
-    length = len(songs)-1
-    return render(request, 'home.html', {'songs':songs, 'songs_new':songs_new, 'length':length})
+    new_songs = list(reversed(Song.objects.all()))
+    popular_songs = Song.objects.order_by('-add_my')
+    length = len(new_songs)-1
+    return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
 
 
 def added(request,pk):
@@ -85,6 +85,22 @@ def choosing_album(request):
     if request.method == 'POST' and album_form.is_valid():
         album_form.save()
         created_album = Album.objects.last()
-        return redirect(f'music_player:upload', pk=created_album.pk )
+        return redirect('music_player:upload', pk=created_album.pk )
     
     return render(request, 'choosing_album.html', {'albums':albums, 'album_form': album_form})
+
+def playlists(request):
+    playlists = Playlist.objects.filter(user=request.user)
+    return render(request, 'playlists.html', {'playlists':playlists})
+
+def playlist(request, pk):
+    playlist = Playlist.objects.get(pk=pk)
+    playlist_songs = []
+
+    for song in playlist.songs.all():
+        songs = {}
+        songs['title'] = f'{song.name}'
+        songs['file'] = f'/media/{song.song}'
+        songs['poster'] = f'/media/{song.album.album_image}'
+        playlist_songs.append(songs)
+    return render(request, 'playlist.html', {'playlist':playlist,'playlist_songs':playlist_songs})

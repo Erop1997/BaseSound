@@ -11,5 +11,7 @@ urlpatterns = [
     path('singer/<int:pk>', views.singer , name='singer'),
     path('upload/<int:pk>', views.upload , name='upload'),
     path('choosing_album/', views.choosing_album , name='choosing_album'),
-    path('added/<int:pk>', views.added, name='added')
+    path('added/<int:pk>', views.added, name='added'),
+    path('playlists', views.playlists, name='playlists'),
+    path('playlist/<int:pk>', views.playlist, name='playlist'),
 ]

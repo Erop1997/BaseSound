@@ -43,3 +43,11 @@ class Uploaded_Song(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Playlist(models.Model):
+    playlist_title = models.CharField(max_length=255)
+    songs = models.ManyToManyField(Song, related_name='song_playlist')
+    user = models.ForeignKey(User, related_name='user_playlist',on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.playlist_title

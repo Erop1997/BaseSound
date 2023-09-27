@@ -1,0 +1,16 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="box">
+    <div class="title">{{ playlist }}</div>
+    <div class="column is-vcentered">
+        <div class="container mt-6 has-text-sentered">
+            <script>
+                var player = new Playerjs({ id: "player", file: {{ playlist_songs | safe}}});
+            </script>
+            <div id="player" style="width: 500px; height: 500px ;">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

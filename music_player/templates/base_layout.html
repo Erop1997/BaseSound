@@ -63,6 +63,11 @@
                 Перейти в CRM
               </a>
               {% endif %}
+              {% if user.user_playlist %}
+              <a href="{% url 'music_player:playlists' %}" class="navbar-item">
+                Мои плейлисты
+              </a>
+              {% endif %}
               <a class="navbar-item has-text-danger" href="{% url 'users:sign_out' %}">
                 Выйти
               </a>
