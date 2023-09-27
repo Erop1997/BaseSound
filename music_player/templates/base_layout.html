@@ -17,6 +17,7 @@
 
 <body>
   <nav class="navbar is-link">
+    {% if user.is_authenticated %}
     <div class="container">
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
@@ -88,6 +89,7 @@
       </div>
     </div>
     </div>
+    {% endif %}
   </nav>
 
   <section class="background hero is-fullheight-with-navbar ">
@@ -97,12 +99,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
   <script>
     bulmaCarousel.attach('#carousel-demo', {
-        slidesToScroll: 1,
-        slidesToShow: {{length}},
-        infinite: true,
+      slidesToScroll: 1,
+      slidesToShow: {{ length }},
+      infinite: true,
     });
- </script>
- 
+  </script>
+
 </body>
 
 </html>
