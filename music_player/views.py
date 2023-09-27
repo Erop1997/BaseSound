@@ -78,6 +78,7 @@ def upload(request, pk):
         return redirect('music_player:home')
     return render(request, 'upload.html', {'form': form})
 
+@login_required(login_url='/users/sign_in')
 def choosing_album(request):
     albums = Album.objects.filter(is_uploaded=True)
     album_form = AlbumForm(request.POST or None, request.FILES or None)
