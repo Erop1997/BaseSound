@@ -6,7 +6,7 @@ from django.db.models import Q
 
 from .forms import *
 
-
+@login_required(login_url='/users/sign_in')
 def home(request):
     songs = Song.objects.all()
     songs_new = Song.objects.order_by('-add_my')
@@ -21,22 +21,26 @@ def added(request,pk):
         else song_data.add_my.remove(request.user)
     return redirect('music_player:songs')
 
-
+@login_required(login_url='/users/sign_in')
 def songs(request):
     songs_list = Song.objects.all()
     my_songs = request.GET.get('add_my')
     songs_list = Song.objects.filter(add_my=request.user) if my_songs else songs_list
     return render(request, 'songs.html', {'songs_list':songs_list})
 
+@login_required(login_url='/users/sign_in')
 def song(request,pk):
     music = Song.objects.get(pk=pk)
     
     return render(request, 'song.html', {'song': music})
 
+
+@login_required(login_url='/users/sign_in')
 def albums(request):
     albums_list = Album.objects.filter(is_uploaded = True)
     return render(request, 'albums.html', {'albums_list':albums_list})
 
+@login_required(login_url='/users/sign_in')
 def album(request,pk):
     album = Album.objects.get(pk=pk)
     list_playlist = []
@@ -50,6 +54,7 @@ def album(request,pk):
 
     return render(request, 'album.html', {'album': album, 'list_playlist':list_playlist})
 
+@login_required(login_url='/users/sign_in')
 def singers(request):
     singers_list = Singer.objects.all()
     return render(request, 'singers.html', {'singers_list':singers_list})
