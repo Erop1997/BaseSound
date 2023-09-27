@@ -5,10 +5,20 @@
 <div class="section">
     <div class="columns">
         <div class="column">
-            <div class="box">
-                <figure>
-                    <img src="{{ album.album_image.url }}" alt="">
-                </figure>
+            <div class="box has-background-link">
+                <div class="columns">
+                    <div class="column">
+                        <figure>
+                            <img src="{{ album.album_image.url }}" alt="" >
+                        </figure>
+                        <div class="title has-text-centered has-text-white">{{ album }}</div>
+                    </div> 
+                    
+                    <div class="column is-flex">
+                        <div class="subtitle has-text-white">{{ album.description }}</div>
+                    </div>
+
+                </div>
             </div>
         </div>
         <div class="column is-vcentered">
@@ -21,14 +31,6 @@
             </div> 
         </div>
     </div>
-
-    <div class="column is-vcentered">
-        <div class="column is-5">
-            <div class="message has-text-white">
-                {{ album.description }}
-            </div>
-        </div>
-    </div>    
 
 
 </div>
