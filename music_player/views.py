@@ -16,16 +16,27 @@ def home(request):
 
 def added(request,pk):
     song_data = Song.objects.get(pk=pk)
-
     song_data.add_my.add(request.user) if request.user not in song_data.add_my.all() \
         else song_data.add_my.remove(request.user)
-    return redirect('music_player:songs')
+
+
+def favorite(request):
+    add_to = request.GET.get('add_to')
+    favorite = Song.objects.filter(add_my=request.user)
+    if add_to:
+        added(request,add_to)
+        return redirect('music_player:favorite')
+    return render(request, 'favorite.html', {'favorite': favorite})
 
 @login_required(login_url='/users/sign_in')
 def songs(request):
     songs_list = Song.objects.all()
-    my_songs = request.GET.get('add_my')
-    songs_list = Song.objects.filter(add_my=request.user) if my_songs else songs_list
+    add_to = request.GET.get('add_to')
+
+    if add_to:
+        added(request,add_to)
+        return redirect('music_player:songs')
+    
     return render(request, 'songs.html', {'songs_list':songs_list})
 
 @login_required(login_url='/users/sign_in')

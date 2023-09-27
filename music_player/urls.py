@@ -14,4 +14,5 @@ urlpatterns = [
     path('added/<int:pk>', views.added, name='added'),
     path('playlists', views.playlists, name='playlists'),
     path('playlist/<int:pk>', views.playlist, name='playlist'),
+    path('favorite/', views.favorite, name='favorite')
 ]
