@@ -1,14 +1,31 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
+<div class="modal {% if modal %} is-active {% endif %}">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <div class="title">
+                Введите название плейлиста:
+            </div>
+            <form method="get">
+                {% csrf_token %}
+                <input name="playlist_name" class="input mb-2"></input>
+            <button type="submit" class="button is-success">Подтвердить</button>
+            <a href="{% url 'music_player:playlists' %}" class="button is-danger">Отмена</a>
+            </form>
+        </div>
+    </div>
+    <a href="{% url 'music_player:playlists' %}" class="modal-close is-large"></a>
+</div>
+<div class="box"><div class="title has-text-centered"><a href="{% url 'music_player:playlists' %}?modals=True">Создать плейлист</a></div></div>
 {% for playlist in playlists %}
-<div class="box">
+<div class="box mx-4 my-4">
     <div class="title has-text-centered">
         <a href="{% url 'music_player:playlist' playlist.pk %}">
             {{ playlist }}
         </a>
     </div>
 </div>
-{{ playlist }}
 {% endfor %}
 {% endblock %}

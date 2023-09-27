@@ -48,7 +48,9 @@ def song(request,pk):
 
 @login_required(login_url='/users/sign_in')
 def albums(request):
+    singer_pk = request.GET.get('singer_pk')
     albums_list = Album.objects.filter(is_uploaded = True)
+    albums_list = albums_list.filter(album_singer=singer_pk) if singer_pk else albums_list
     return render(request, 'albums.html', {'albums_list':albums_list})
 
 @login_required(login_url='/users/sign_in')
@@ -70,10 +72,6 @@ def singers(request):
     singers_list = Singer.objects.all()
     return render(request, 'singers.html', {'singers_list':singers_list})
 
-def singer(request, singer):
-    singer_albums = Album.objects.filter(singer=singer)
-
-    return render(request, 'singer.html', {'singer_albums': singer_albums})
 
 
 @login_required(login_url='/users/sign_in')
@@ -101,13 +99,22 @@ def choosing_album(request):
     return render(request, 'choosing_album.html', {'albums':albums, 'album_form': album_form})
 
 def playlists(request):
+    modal_selection = request.GET.get('modals')
+    playlist_name = request.GET.get('playlist_name')
+    
+    if playlist_name:
+        playlist = Playlist.objects.create(playlist_title=playlist_name, user=request.user)
+        return redirect('music_player:playlist_creation', pk=playlist.pk)
+
+
     playlists = Playlist.objects.filter(user=request.user)
-    return render(request, 'playlists.html', {'playlists':playlists})
+    modal = False 
+    modal = True if modal_selection else modal
+    return render(request, 'playlists.html', {'playlists':playlists,'modal':modal})
 
 def playlist(request, pk):
     playlist = Playlist.objects.get(pk=pk)
     playlist_songs = []
-
     for song in playlist.songs.all():
         songs = {}
         songs['title'] = f'{song.name}'
@@ -115,3 +122,7 @@ def playlist(request, pk):
         songs['poster'] = f'/media/{song.album.album_image}'
         playlist_songs.append(songs)
     return render(request, 'playlist.html', {'playlist':playlist,'playlist_songs':playlist_songs})
+
+def playlist_creation(request,pk):
+    playlist = Playlist.objects.get(pk=pk)
+    return render(request, 'playlist_creation.html',{'playlist':playlist})
