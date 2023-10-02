@@ -13,7 +13,7 @@
                     <div class="title has-text-centered has-text-white">{{ album }}</div>
                 </div>
 
-                <div class="column is-flex">
+                <div class="column">
                     <div class="subtitle has-text-white">{{ album.description }}</div>
                 </div>
 
@@ -21,11 +21,11 @@
         </div>
     </div>
     <div class="column">
-        <div class="container mt-6 has-text-sentered">
+        <div class="container mt-6 has-text-centered">
             <script>
                 var player = new Playerjs({ id: "player", file: {{ list_playlist | safe}}});
             </script>
-            <div id="player" style="width: 500px; height: 500px ;">
+            <div id="player" class="mr-4">
             </div>
         </div>
     </div>
