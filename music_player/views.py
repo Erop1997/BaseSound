@@ -18,9 +18,12 @@ def home(request):
 def added(request,pk):
     song_data = Song.objects.get(pk=pk)
      
-    song_data.add_my.add(request.user) if request.user not in song_data.add_my.all() \
-        else song_data.add_my.remove(request.user)
-        
+    if request.user not in song_data.add_my.all():
+        song_data.add_my.add(request.user)
+        messages.success(request, 'Добавлено в мою музыку') 
+    else:
+        song_data.add_my.remove(request.user)
+        messages.success(request, 'Удалено из моей музыки')
     
 
 def favorite(request):

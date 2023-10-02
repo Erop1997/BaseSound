@@ -90,8 +90,16 @@
         </div>
       </div>
     </div>
-    </div>
   </nav>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <div id="note">
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      </div>
+      {% endfor %}
+    </ul>
+  {% endif %}
   
   <section class="background hero is-fullheight-with-navbar ">
     {% block content %}
