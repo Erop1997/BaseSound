@@ -82,8 +82,6 @@ def singers(request):
 
 @login_required(login_url='/users/sign_in')
 def upload(request, pk):
-
-
     form = SongForm(request.POST or None, request.FILES or None)
     if request.method == 'POST' and form.is_valid():
         instance = form.save(commit=False)
@@ -98,8 +96,13 @@ def choosing_album(request):
     albums = Album.objects.filter(is_uploaded=True)
     album_form = AlbumForm(request.POST or None, request.FILES or None)
     if request.method == 'POST' and album_form.is_valid():
+        singer = album_form.data.get('singer')
+        singer_data = Singer.objects.filter(singer_name__icontains=singer)
         album_form.save()
         created_album = Album.objects.last()
+        singer_data[0].album.add(created_album)
+        created_album.album_singer = singer_data[0]
+        created_album.save()
         return redirect('music_player:upload', pk=created_album.pk )
     
     return render(request, 'choosing_album.html', {'albums':albums, 'album_form': album_form})
@@ -119,7 +122,13 @@ def playlists(request):
     return render(request, 'playlists.html', {'playlists':playlists,'modal':modal})
 
 def playlist(request, pk):
+    action = request.GET.get('action')
     playlist = Playlist.objects.get(pk=pk)
+
+    if action:
+        playlist.delete()
+        return redirect('music_player:playlists')
+    
     playlist_songs = []
     for song in playlist.songs.all():
         songs = {}
@@ -130,5 +139,26 @@ def playlist(request, pk):
     return render(request, 'playlist.html', {'playlist':playlist,'playlist_songs':playlist_songs})
 
 def playlist_creation(request,pk):
+    adding = request.GET.get('adding')
+    
+    playlist_name = request.GET.get('playlist_name')
     playlist = Playlist.objects.get(pk=pk)
-    return render(request, 'playlist_creation.html',{'playlist':playlist})
+
+    if playlist_name:
+        playlist.playlist_title = playlist_name
+        playlist.save()
+        return redirect('music_player:playlist_creation', pk=playlist.pk)
+
+    modal = False
+    modals = request.GET.get('modals')
+    if modals:
+        modal = True
+
+    if adding:
+        song = Song.objects.get(pk=adding)
+        playlist.songs.add(song) if song not in playlist.songs.all() else playlist.songs.remove(song)
+        return redirect('music_player:playlist_creation', pk=playlist.pk)
+
+        
+    songs = [i for i in Song.objects.all() if i not in playlist.songs.all()]
+    return render(request, 'playlist_creation.html',{'playlist':playlist, 'songs':songs, 'modal':modal})

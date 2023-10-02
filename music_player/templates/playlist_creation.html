@@ -1,8 +1,57 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
-<div class="columns">
-    <div class="column"><div class="title">{{ playlist }}</div></div>
-    <div class="column"></div>
+<div class="section">
+    <div class="modal {% if modal %} is-active {% endif %}">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box has-text-centered">
+                <div class="title">
+                    Введите название плейлиста:
+                </div>
+                <form method="get">
+                    {% csrf_token %}
+                    <input name="playlist_name" value="{{ playlist }}" class="input mb-2"></input>
+                <button type="submit" class="button is-success">Подтвердить</button>
+                <a href="{% url 'music_player:playlist_creation' playlist.pk %}" class="button is-danger">Отмена</a>
+                </form>
+            </div>
+        </div>
+        <a href="{% url 'music_player:playlist_creation' playlist.pk %}" class="modal-close is-large"></a>
+    </div>
+    <div class="title has-text-white has-text-centered">
+        {{ playlist }}
+        <a href="{% url 'music_player:playlist_creation' playlist.pk %}?modals=True" class="button ml-3 is-warning"><ion-icon name="pencil-outline"></ion-icon></a>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="box has-background-link">
+                    {% for song in songs %}
+                    <div class="title has-text-white">
+                        {{ song }}
+                        <a href="{% url 'music_player:playlist_creation' playlist.pk %}?adding={{song.pk}}"
+                            class="ml-5 button is-success has-text-white"><ion-icon name="add-outline"></ion-icon></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="column">
+                <div class="box has-background-link">
+                    {% for playlist_song in playlist.songs.all %}
+                    <div class="title has-text-white">
+                        {{ playlist_song }}
+                        <a href="{% url 'music_player:playlist_creation' playlist.pk %}?adding={{playlist_song.pk}}"
+                            class="ml-5 button is-danger has-text-white"><ion-icon name="close-outline"></ion-icon></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buttons is-centered mt-5">
+        <a href="{% url 'music_player:playlist' playlist.pk %}" class="button is-success">Сохранить плейлист</a>
+    </div>
+</div>
 </div>
 {% endblock %}
