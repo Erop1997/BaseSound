@@ -1,6 +1,22 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
+<div class="container mt-4">
+    <form method="get">
+        <div class="field has-addons">
+            <div class="control">
+                <input type="search" class="input" name="search">
+            </div>
+            <div class="control">
+                <button class="button" type="submit">
+                    <ion-icon name="search-outline">
+                    </ion-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="columns my-2">
     <div class="column">
         <div class="columns is-multiline is-centered p-4">

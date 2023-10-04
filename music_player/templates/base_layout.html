@@ -93,7 +93,6 @@
   </nav>
   
   <section class="background hero is-fullheight-with-navbar ">
-    <div>
     {% if messages %}
       <ul class="messages">
         {% for message in messages %}
@@ -103,7 +102,6 @@
         {% endfor %}
       </ul>
     {% endif %}
-    </div>
 
     {% block content %}
     {% endblock %}

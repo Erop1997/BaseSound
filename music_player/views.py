@@ -39,6 +39,12 @@ def favorite(request):
 def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
+    search = request.GET.get('search')
+
+    if search:
+        songs_list = Song.objects.filter(
+            Q(name__icontains = search)
+        )
 
     if add_to:
         added(request,add_to)
@@ -58,6 +64,13 @@ def albums(request):
     singer_pk = request.GET.get('singer_pk')
     albums_list = Album.objects.filter(is_uploaded = True)
     albums_list = albums_list.filter(album_singer=singer_pk) if singer_pk else albums_list
+    search = request.GET.get('search')
+
+    if search:
+        albums_list = Album.objects.filter(
+            Q(title__icontains = search)
+        )
+
     return render(request, 'albums.html', {'albums_list':albums_list})
 
 @login_required(login_url='/users/sign_in')
@@ -77,6 +90,12 @@ def album(request,pk):
 @login_required(login_url='/users/sign_in')
 def singers(request):
     singers_list = Singer.objects.all()
+    search = request.GET.get('search')
+
+    if search:
+        singers_list = Singer.objects.filter(
+            Q(singer_name__icontains = search)
+        )
     return render(request, 'singers.html', {'singers_list':singers_list})
 
 
@@ -90,6 +109,7 @@ def upload(request, pk):
         instance.album = album
         instance.song_singer = album.album_singer
         instance.save()
+        messages.success(request, 'Отправлено на модерацию')
         return redirect('music_player:home')
     return render(request, 'upload.html', {'form': form})
 
