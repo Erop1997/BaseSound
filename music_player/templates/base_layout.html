@@ -103,17 +103,27 @@
       </ul>
     {% endif %}
 
+  <section class="background hero is-fullheight-with-navbar ">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <div id="note" class="grid">
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+      </div>
+      {% endfor %}
+    </ul>
+    {% endif %}
     {% block content %}
     {% endblock %}
-  </section>
-  <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
-  <script>
-    bulmaCarousel.attach('#carousel-demo', {
-      slidesToScroll: 1,
-      slidesToShow: {{ length }},
-      infinite: true,
+
+    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
+    <script>
+      bulmaCarousel.attach('#carousel-demo', {
+        slidesToScroll: 1,
+        slidesToShow: {{ length }},
+        infinite: true,
     });
-  </script>
+    </script>
 
 </body>
 
