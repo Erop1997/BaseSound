@@ -135,9 +135,11 @@ def choosing_album(request):
 def playlists(request):
     modal_selection = request.GET.get('modals')
     playlist_name = request.GET.get('playlist_name')
+    playlist_image = request.GET.get('playlist_image')
     
     if playlist_name:
-        playlist = Playlist.objects.create(playlist_title=playlist_name, user=request.user)
+        playlist = Playlist.objects.create(playlist_title=playlist_name,playlist_image=playlist_image, user=request.user)
+
         return redirect('music_player:playlist_creation', pk=playlist.pk)
 
 
@@ -159,7 +161,7 @@ def playlist(request, pk):
         songs = {}
         songs['title'] = f'{song.name}'
         songs['file'] = f'/media/{song.song}'
-        songs['poster'] = f'/media/{song.album.album_image}'
+        songs['poster'] = f'/media/{playlist.playlist_image}'
         playlist_songs.append(songs)
     return render(request, 'playlist.html', {'playlist':playlist,'playlist_songs':playlist_songs})
 

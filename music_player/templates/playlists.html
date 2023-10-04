@@ -5,12 +5,17 @@
     <div class="modal-background"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <div class="title">
-                Введите название плейлиста:
-            </div>
-            <form method="get">
+            <form method="get" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input name="playlist_name" class="input mb-2"></input>
+                <div class="title is-4">
+                    Введите название плейлиста:
+                </div>
+                <input name="playlist_name" required class="input mb-2"></input>
+                <div class="title is-6">
+                    Выберите обложку плейлиста:
+                </div>
+                <div class="mb-5"><input required type="file" name="playlist_image"></div>
+                
             <button type="submit" class="button is-success">Подтвердить</button>
             <a href="{% url 'music_player:playlists' %}" class="button is-danger">Отмена</a>
             </form>
@@ -22,6 +27,9 @@
 {% for playlist in playlists %}
 <div class="box has-background-link mx-4 my-4">
     <div class="title has-text-centered">
+        <div class="card-image pt-2">
+            <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ playlist.playlist_image }}">
+        </div>
         <a class="has-text-white" href="{% url 'music_player:playlist' playlist.pk %}">
             {{ playlist }}
         </a>

@@ -48,6 +48,7 @@ class Uploaded_Song(models.Model):
     
 class Playlist(models.Model):
     playlist_title = models.CharField(max_length=255)
+    playlist_image = models.ImageField(default='6120361940.jpg')
     songs = models.ManyToManyField(Song, related_name='song_playlist')
     user = models.ForeignKey(User, related_name='user_playlist',on_delete=models.CASCADE)
 

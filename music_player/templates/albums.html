@@ -17,25 +17,22 @@
     </form>
 </div>
 
-<div class="columns my-2">
-    <div class="column">
-        <div class="columns is-multiline is-centered p-4">
-            {% for album in albums_list %}
-                <div class="column is-4">
-                    <a href="{% url 'music_player:album' album.pk %}">
-                        <div class="card mt-2 has-background-link-light">
-                            <div class="card-image pt-2">
-                                <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ album.album_image }}">
-                            </div>
-                            <div class="card-content has-text-centered">
-                                <div class="title">{{ album }}</div>
-                                <div class="subtitle">{{ song.album.singer }}</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}  
+{% for album in albums_list %}
+<div class="dropdown is-fullwidth">
+    <div class="dropdown-trigger">
+        <div class="button is-fullwidth" onclick="toogleMenu()" aria-haspopup="true" aria-controls="dropdown-menu">
+            <span>{{album}}</span>
+        </div>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+            {% for song in album.songs.all %}
+            <a href="#" class="dropdown-item">
+                {{ song }}
+            </a>
+            {% endfor %}
         </div>
     </div>
 </div>
+{% endfor %}
 {% endblock %}
