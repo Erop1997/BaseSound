@@ -11,7 +11,8 @@ from .forms import *
 def home(request):
     new_songs = list(reversed(Song.objects.all()))
     popular_songs = Song.objects.order_by('-add_my')
-    length = len(new_songs)-1
+    length = len(new_songs)-1 if len(new_songs) < 4 else 4
+
     return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
 
 
@@ -87,6 +88,7 @@ def upload(request, pk):
         instance = form.save(commit=False)
         album = Album.objects.get(pk=pk)
         instance.album = album
+        instance.song_singer = album.album_singer
         instance.save()
         return redirect('music_player:home')
     return render(request, 'upload.html', {'form': form})
@@ -98,6 +100,9 @@ def choosing_album(request):
     if request.method == 'POST' and album_form.is_valid():
         singer = album_form.data.get('singer')
         singer_data = Singer.objects.filter(singer_name__icontains=singer)
+        if not singer_data:
+            Singer.objects.create(singer_name=singer)
+            singer_data = Singer.objects.filter(singer_name=singer)
         album_form.save()
         created_album = Album.objects.last()
         singer_data[0].album.add(created_album)

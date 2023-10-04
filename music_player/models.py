@@ -23,6 +23,7 @@ class Song(models.Model):
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
     song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
 
+
     def __str__(self):
         return self.name
 
@@ -40,6 +41,7 @@ class Uploaded_Song(models.Model):
     name = models.CharField(max_length=255)
     song = models.FileField()
     chosen = models.BooleanField(default=False)
+    song_singer = models.ForeignKey('music_player.Singer', related_name='uploaded_song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
