@@ -75,3 +75,6 @@ def choosing_album(request):
         return redirect(f'music_player:upload', pk=created_album.pk )
     
     return render(request, 'choosing_album.html', {'albums':albums, 'album_form': album_form})
+
+
+
