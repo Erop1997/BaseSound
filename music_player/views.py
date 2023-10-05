@@ -55,6 +55,8 @@ def songs(request):
 @login_required(login_url='/users/sign_in')
 def song(request,pk):
     music = Song.objects.get(pk=pk)
+    if request.user not in music.views.all():
+        music.views.add(request.user)
     
     return render(request, 'song.html', {'song': music})
 

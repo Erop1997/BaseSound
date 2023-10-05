@@ -22,7 +22,7 @@ class Song(models.Model):
     song = models.FileField()
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
     song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
-
+    views = models.ManyToManyField(User, related_name='song_views')
 
     def __str__(self):
         return self.name

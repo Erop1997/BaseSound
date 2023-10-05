@@ -9,6 +9,18 @@
     </script>
     <div id="player" style="width: 500px; height: 500px ;">
     </div>
+
+    <div class="box has-background-link-light">
+        <div class="title is-size-5">
+            <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
+                <ion-icon name="caret-forward-circle-outline">
+                </ion-icon>
+                <span class="ml-2">
+                    {{ song.views.count }}
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
