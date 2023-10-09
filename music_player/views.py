@@ -57,7 +57,7 @@ def song(request,pk):
     music = Song.objects.get(pk=pk)
     if request.user not in music.views.all():
         music.views.add(request.user)
-    
+        
     return render(request, 'song.html', {'song': music})
 
 
@@ -97,7 +97,7 @@ def singers(request):
     if search:
         singers_list = Singer.objects.filter(
             Q(singer_name__icontains = search)
-        )
+        )    
 
     return render(request, 'singers.html', {'singers_list':singers_list})
 

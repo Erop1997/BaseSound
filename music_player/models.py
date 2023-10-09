@@ -27,7 +27,9 @@ class Song(models.Model):
     def __str__(self):
         return self.name
     
-   
+    
+    
+
 
 class Singer(models.Model):
     singer_name = models.CharField(max_length=255)
@@ -39,6 +41,10 @@ class Singer(models.Model):
     
     def views_count(self):
         return sum([i.views.count() for i in self.song_singer.all()])
+
+    def album_count(self):
+        return len([i for i in self.album_singer.all()])        
+
 
 class Uploaded_Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='uploaded_songs', null=True, blank=True)
