@@ -11,7 +11,8 @@ from .forms import *
 def home(request):
     new_songs = list(reversed(Song.objects.all()))
     popular_songs = Song.objects.order_by('-add_my')
-    length = len(new_songs)-1
+    length = len(new_songs)-1 if len(new_songs) < 4 else 4
+
     return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
 
 
@@ -38,6 +39,12 @@ def favorite(request):
 def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
+    search = request.GET.get('search')
+
+    if search:
+        songs_list = Song.objects.filter(
+            Q(name__icontains = search)
+        )
 
     if add_to:
         added(request,add_to)
@@ -48,6 +55,8 @@ def songs(request):
 @login_required(login_url='/users/sign_in')
 def song(request,pk):
     music = Song.objects.get(pk=pk)
+    if request.user not in music.views.all():
+        music.views.add(request.user)
     
     return render(request, 'song.html', {'song': music})
 
@@ -57,6 +66,13 @@ def albums(request):
     singer_pk = request.GET.get('singer_pk')
     albums_list = Album.objects.filter(is_uploaded = True)
     albums_list = albums_list.filter(album_singer=singer_pk) if singer_pk else albums_list
+    search = request.GET.get('search')
+
+    if search:
+        albums_list = Album.objects.filter(
+            Q(title__icontains = search)
+        )
+
     return render(request, 'albums.html', {'albums_list':albums_list})
 
 @login_required(login_url='/users/sign_in')
@@ -76,6 +92,12 @@ def album(request,pk):
 @login_required(login_url='/users/sign_in')
 def singers(request):
     singers_list = Singer.objects.all()
+    search = request.GET.get('search')
+
+    if search:
+        singers_list = Singer.objects.filter(
+            Q(singer_name__icontains = search)
+        )
     return render(request, 'singers.html', {'singers_list':singers_list})
 
 
@@ -87,7 +109,9 @@ def upload(request, pk):
         instance = form.save(commit=False)
         album = Album.objects.get(pk=pk)
         instance.album = album
+        instance.song_singer = album.album_singer
         instance.save()
+        messages.success(request, 'Отправлено на модерацию')
         return redirect('music_player:home')
     return render(request, 'upload.html', {'form': form})
 
@@ -98,6 +122,9 @@ def choosing_album(request):
     if request.method == 'POST' and album_form.is_valid():
         singer = album_form.data.get('singer')
         singer_data = Singer.objects.filter(singer_name__icontains=singer)
+        if not singer_data:
+            Singer.objects.create(singer_name=singer)
+            singer_data = Singer.objects.filter(singer_name=singer)
         album_form.save()
         created_album = Album.objects.last()
         singer_data[0].album.add(created_album)
@@ -110,9 +137,11 @@ def choosing_album(request):
 def playlists(request):
     modal_selection = request.GET.get('modals')
     playlist_name = request.GET.get('playlist_name')
+    playlist_image = request.GET.get('playlist_image')
     
     if playlist_name:
-        playlist = Playlist.objects.create(playlist_title=playlist_name, user=request.user)
+        playlist = Playlist.objects.create(playlist_title=playlist_name,playlist_image=playlist_image, user=request.user)
+
         return redirect('music_player:playlist_creation', pk=playlist.pk)
 
 
@@ -134,7 +163,7 @@ def playlist(request, pk):
         songs = {}
         songs['title'] = f'{song.name}'
         songs['file'] = f'/media/{song.song}'
-        songs['poster'] = f'/media/{song.album.album_image}'
+        songs['poster'] = f'/media/{playlist.playlist_image}'
         playlist_songs.append(songs)
     return render(request, 'playlist.html', {'playlist':playlist,'playlist_songs':playlist_songs})
 

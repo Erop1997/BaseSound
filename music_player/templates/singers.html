@@ -1,23 +1,42 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
+<div class="container mt-4">
+    <form method="get">
+        <div class="field has-addons">
+            <div class="control">
+                <input type="search" class="input" name="search">
+            </div>
+            <div class="control">
+                <button class="button" type="submit">
+                    <ion-icon name="search-outline">
+                    </ion-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
 <div class="columns my-2">
     <div class="column">
         <div class="columns is-multiline is-centered p-4">
             {% for singer in singers_list %}
-                <div class="column is-4">
-                    <a href="{% url 'music_player:albums' %}?singer_pk={{singer.pk}}">
-                        <div class="card mt-2 has-background-link-light">
-                            <div class="card-image pt-2">
-                                <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ singer.singer_image }}">
-                            </div>
-                            <div class="card-content has-text-centered">
-                                <div class="title">{{ singer }}</div>
-                            </div>
+            <div class="column is-4">
+                <a href="{% url 'music_player:albums' %}?singer_pk={{singer.pk}}">
+                    <div class="card mt-2 has-background-link-light">
+                        <div class="card-image pt-2">
+                            <img class="image" style="margin: auto; width: 200px; height: 200px;"
+                                src="/media/{{ singer.singer_image }}">
                         </div>
-                    </a>
-                </div>
-            {% endfor %}  
+                        <div class="card-content has-text-centered">
+                            <div class="title">{{ singer }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
