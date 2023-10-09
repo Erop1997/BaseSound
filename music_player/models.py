@@ -26,15 +26,19 @@ class Song(models.Model):
 
     def __str__(self):
         return self.name
+    
+   
 
 class Singer(models.Model):
     singer_name = models.CharField(max_length=255)
     album = models.ManyToManyField(Album, related_name='singer', blank=True)
-    songs = models.ManyToManyField(Song, related_name='singer', blank=True)
     singer_image = models.ImageField(default='6120361940.jpg')
 
     def __str__(self):
         return self.singer_name
+    
+    def views_count(self):
+        return sum([i.views.count() for i in self.song_singer.all()])
 
 class Uploaded_Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='uploaded_songs', null=True, blank=True)
