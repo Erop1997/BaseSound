@@ -46,7 +46,7 @@ def sign_out(request):
 
 def reset_password(request):
     form = ResetPasswordForm(request.user, request.POST or None)
-    if form.is_valid():
+    if request.method == 'POST' and form.is_valid():
         user = form.save()
         update_session_auth_hash(request, user)
         return redirect('users:sign_in')
