@@ -23,6 +23,7 @@ class Song(models.Model):
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
     song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
     views = models.ManyToManyField(User, related_name='song_views')
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     def __str__(self):
         return self.name
@@ -35,6 +36,7 @@ class Singer(models.Model):
     singer_name = models.CharField(max_length=255)
     album = models.ManyToManyField(Album, related_name='singer', blank=True)
     singer_image = models.ImageField(default='6120361940.jpg')
+    subscribers = models.ManyToManyField(User, related_name='subscribers',blank=True)
 
     def __str__(self):
         return self.singer_name
@@ -64,3 +66,19 @@ class Playlist(models.Model):
 
     def __str__(self):
         return self.playlist_title
+    
+class Notificaton(models.Model):
+    notify_user = models.ForeignKey(User, related_name='notify_user', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Нотификация юзера - {self.notify_user}'
+
+class Notification_object(models.Model):
+    notify = models.ForeignKey(Notificaton, related_name='notify', on_delete=models.CASCADE)
+    notify_song = models.ManyToManyField(Song, related_name='notify_song', blank=True)
+    notify_album = models.ManyToManyField(Album, related_name='notify_album', blank=True)
+    notify_singer = models.ManyToManyField(Singer, related_name='notify_singer', blank=True)
+    deleted_things = models.CharField(max_length=225,blank=True)
+
+    def __str__(self):
+        return f'Объекты нотификации - {self.notify}'

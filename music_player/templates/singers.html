@@ -9,8 +9,7 @@
             </div>
             <div class="control">
                 <button class="button" type="submit">
-                    <ion-icon name="search-outline">
-                    </ion-icon>
+                    <ion-icon name="search-outline"></ion-icon>
                 </button>
             </div>
         </div>
@@ -33,6 +32,19 @@
                         <div class="card-content has-text-centered">
                             <div class="title">{{ singer }}</div>
                         </div>
+                        <div class="card-content has-text-centered">
+                        {% if request.user in singer.subscribers.all %}
+                        <a href="{% url 'music_player:singers' %}?subscribe={{ singer.pk }}"
+                            class="button has-background-link mt-2" onclick="setTimeout()">
+                            <div class="subtitle has-text-white">Отписаться</div>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'music_player:singers' %}?subscribe={{ singer.pk }}"
+                            class="button has-background-link-light mt-2" onclick="setTimeout()">
+                            <div class="subtitle">Подписаться</div>
+                        </a>
+                        {% endif %}
+                    </div>
                     </div>
                 </a>
 

@@ -10,7 +10,6 @@ from django.contrib.auth import update_session_auth_hash
 
 # Авторизация
 def sign_in(request):
-    valid_user = True
     form = SignInForm() 
     if request.method == 'POST':
         form = SignInForm(data = request.POST)        
@@ -19,13 +18,10 @@ def sign_in(request):
             login(request, user)
 
             if user.is_staff and not user.is_superuser:
-                return redirect('staff:home')
+                return redirect('staff:admin')
             
             return redirect('music_player:home')
-        
-        valid_user = False
-    # form = SignInForm()    
-    return render(request, 'sign_in.html', {'form': form, 'valid_user': valid_user})
+    return render(request, 'sign_in.html', {'form': form})
     
 
 
@@ -35,6 +31,8 @@ def sign_up(request):
     form = SignUpForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         form.save()
+        user = User.objects.get(username = form.data.get('username'))
+        Notificaton.objects.create(notify_user = user)
         return redirect('users:sign_in')
     return render(request, 'sign_up.html', {'form': form})
 

@@ -12,8 +12,11 @@ def home(request):
     new_songs = list(reversed(Song.objects.all()))
     popular_songs = Song.objects.order_by('-add_my')
     length = len(new_songs)-1 if len(new_songs) < 4 else 4
-
-    return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
+    notify = Notificaton.objects.get(notify_user = request.user)
+    notify_objects = Notification_object.objects.get(notify = notify)
+    print(notify_objects.notify_song.all())
+        
+    return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length, 'notify_objects':notify_objects })
 
 
 def added(request,pk):
@@ -40,11 +43,17 @@ def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
     search = request.GET.get('search')
+    likes = request.GET.get('likes')
 
     if search:
         songs_list = Song.objects.filter(
             Q(name__icontains = search)
         )
+
+    if likes:
+        song = Song.objects.get(pk=likes)
+        song.likes.add(request.user) if request.user not in song.likes.all() else song.likes.remove(request.user)
+        return redirect('music_player:songs')
 
     if add_to:
         added(request,add_to)
@@ -93,11 +102,18 @@ def album(request,pk):
 def singers(request):
     singers_list = Singer.objects.all()
     search = request.GET.get('search')
+    subscribe = request.GET.get('subscribe')
 
     if search:
         singers_list = Singer.objects.filter(
             Q(singer_name__icontains = search)
-        )    
+        )
+
+    if subscribe:
+        singer = Singer.objects.get(pk=subscribe)
+        singer.subscribers.add(request.user) if request.user not in singer.subscribers.all() else singer.subscribers.remove(request.user)
+        return redirect('music_player:singers')
+
 
     return render(request, 'singers.html', {'singers_list':singers_list})
 

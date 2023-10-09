@@ -1,4 +1,5 @@
 {% load static %}
+{% load notification %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,13 +40,7 @@
             Треки
           </a>
         </div>
-        <!-- 
-        <form method="get" class="mt-2">
-          <div class="control is-flex">
-            <input type="search" class="input" placeholder="Найти трек по названию" name="search" style="width: 220px;">
-            <button type="submit" class="button"><ion-icon name="search"></ion-icon></button>
-          </div>
-        </form> -->
+        
 
 
         <div class="navbar-end">
@@ -78,6 +73,7 @@
             <button class="button">Войти</button>
           </a>
           {% endif %}
+          {% notification %}
 
           <div class="navbar-item">
             <a href="{% url 'music_player:choosing_album' %}" class="button is-link">
