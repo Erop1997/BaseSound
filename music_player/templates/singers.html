@@ -6,7 +6,7 @@
         <div class="columns is-multiline is-centered p-4">
             {% for singer in singers_list %}
                 <div class="column is-4">
-                    <a href="{% url 'music_player:singer' singer.pk %}">
+                    <a href="{% url 'music_player:albums' %}?singer_pk={{singer.pk}}">
                         <div class="card mt-2 has-background-link-light">
                             <div class="card-image pt-2">
                                 <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ singer.singer_image }}">

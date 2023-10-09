@@ -1,0 +1,23 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="box has-background-link my-4 mx-4">
+    <div class="title has-text-centered has-text-white">{{ playlist }}</div>
+    <div class="columns">
+        <div class="column">
+            <div class="container has-text-sentered">
+                <script>
+                    var player = new Playerjs({ id: "player", file: {{ playlist_songs | safe}}});
+                </script>
+                <div id="player">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buttons is-centered">
+        <a href="{% url 'music_player:playlist_creation' playlist.pk %}" class="button is-warning">Редактировать
+            плейлист</a>
+        <a href="{% url 'music_player:playlist' playlist.pk %}?action=remove" class="button is-danger">Удалить плейлист</a>
+    </div>
+</div>
+{% endblock %}

@@ -2,47 +2,40 @@
 
 {% block content %}
 
-{% for song in song_album_list %}
-<div class="section">
-    <div class="columns">
-        <div class="column">
-            <div class="box">
-                <figure>
-                    <img src="{{ album.album_image.url }}" alt="">
-                </figure>
+<div class="columns">
+    <div class="column mt-6 ml-4">
+        <div class="box has-background-link">
+            <div class="columns">
+                <div class="column">
+                    <figure>
+                        <img src="{{ album.album_image.url }}" alt="">
+                    </figure>
+                    <div class="title has-text-centered has-text-white">{{ album }}</div>
+                </div>
+
+                <div class="column">
+                    <div class="subtitle has-text-white">{{ album.description }}</div>
+                </div>
+
             </div>
         </div>
-        <div class="column is-flex">
-            <div class="column is-vcentered">
-                <div class="column is-5">
-                    <div class="message">
-                        {{ album.description }}
-                    </div>
-                </div>
+    </div>
+    <div class="column">
+        <div class="container mt-6 has-text-centered">
+            <script>
+                var player = new Playerjs({ id: "player", file: {{ list_playlist | safe}}});
+            </script>
+            <div id="player" class="mr-4">
             </div>
-
-        </div>   
+        </div>
     </div>
 </div>
 
 
 
-<div class="container mt-6 has-text-centered">
-    <div class="box has-background-link-light"><div class="title is-size-5">"{{ song }}" из альбома - <a href="{% url 'music_player:home' %}">"{{ album }}"</a></div></div>
-    <script>
-        var player = new Playerjs({ id: "player", file: "/media/{{song.song}}", poster: "/media/{{song.album.album_image}}"});
-    </script>
-    <div id="player" style="width: 500px; height: 500px ;">
-    </div>
-</div>
 
-<div class="container">
-    <div class="box has-text-centered">
-        <ol>
-            <li>{{ song }}</li>
-        </ol>
-    </div>
-</div>
-{% endfor %}
+
+
+
 
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block content %}
 <div class="box has-background-link-light">
     <div class="title has-text-centered">Добавляемый альбом: {{ uploaded_album }}</div>
+    <div class="title has-text-centered">Исполнитель: {{ uploaded_album.album_singer }}</div>
     <div class="columns">
         <div class="column">
             <div class="box">
@@ -30,7 +31,7 @@
             <script>
                 var player = new Playerjs({ id: "player", file: {{ list_playlist | safe}}});
             </script>
-            <div id="player" style="width: 500px; height: 500px ;">
+            <div id="player">
             </div>
         </div>
     </div>

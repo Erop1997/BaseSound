@@ -1,4 +1,4 @@
-{% extends 'base_layout.html' %}
+{% extends 'user_layout.html' %}
 <!-- Авторизация -->
 
 
@@ -22,7 +22,7 @@
 
         {% if form.errors %}
         <ul>
-            {% for orror in form.errors.values %}
+            {% for error in form.errors.values %}
             <li class="has-text-danger">{{ error }}</li>
             {% endfor %}
         </ul>

@@ -14,12 +14,14 @@
                             <div class="card-content has-text-centered">
                                 <div class="title">{{ song }}</div>
                                 <div class="subtitle">{{ song.song_singer }}</div>
+                                
                                 {% if request.user in song.add_my.all %}
-                                <a href="{% url 'music_player:added' song.pk %}" class="button mt-2 is-link">
+                                <a href="{% url 'music_player:songs' %}?add_to={{ song.pk }}" class="button mt-2 is-link" onclick="setTimeout()">
                                     <ion-icon name="checkmark-outline"></ion-icon>
                                 </a>
+                                
                                 {% else %}
-                                <a href="{% url 'music_player:added' song.pk %}" class="button has-background-link-light mt-2">   
+                                <a href="{% url 'music_player:songs' %}?add_to={{ song.pk }}" class="button has-background-link-light mt-2" onclick="setTimeout()">   
                                     <ion-icon name="add-outline"></ion-icon>
                                 </a>    
                                 {% endif %}
