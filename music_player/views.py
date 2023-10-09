@@ -98,6 +98,7 @@ def singers(request):
         singers_list = Singer.objects.filter(
             Q(singer_name__icontains = search)
         )
+
     return render(request, 'singers.html', {'singers_list':singers_list})
 
 
