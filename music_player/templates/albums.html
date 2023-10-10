@@ -1,35 +1,70 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <form method="get">
-        <div class="field has-addons">
-            <div class="control">
-                <input type="search" class="input" name="search">
+<div class="section">
+    <div class="container mt-4">
+        <form method="get">
+            <div class="field has-addons">
+                <div class="control">
+                    <input placeholder="Найти альбом" type="search" class="input" name="search">
+                </div>
+                <div class="control">
+                    <button class="button" type="submit">
+                        <ion-icon name="search-outline">
+                        </ion-icon>
+                    </button>
+                </div>
             </div>
-            <div class="control">
-                <button class="button" type="submit">
-                    <ion-icon name="search-outline">
-                    </ion-icon>
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
-
-{% for album in albums_list %}
-<div class="dropdown is-fullwidth">
-    <div class="dropdown-trigger">
-        <div class="button is-fullwidth" onclick="toogleMenu()" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span>{{album}}</span>
-        </div>
+        </form>
     </div>
-    <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content">
+</div>
+{% for album in albums_list %}
+<div class="column mx-3">
+    <div class="box has-background-link has-text-white">
+        <div class="columns is-vcentered">
+            <div class="column">
+                <a href="{% url 'music_player:album' album.pk %}">
+                    <img class="image is-128x128" style="margin: auto;" src="/media/{{ album.album_image }}">
+                </a>
+            </div>
+            <div class="column">
+                <a href="{% url 'music_player:album' album.pk %}">
+                    <div class="title has-text-centered has-text-white mt-1">{{album}}</div>
+                </a>
+            </div>
+            <div class="column">
+                <div class="columns is-vcentered">
+                    <div class="column is-1 mr-2">
+                        <ion-icon class="icon is-medium mt-1" name="headset-outline"></ion-icon>
+                    </div>
+                    <div class="column">
+                        <span class="title has-text-white">Прослушиваний - {{ album.views_count }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="columns is-vcentered">
+                    <div class="column is-1 mr-2">
+                        <ion-icon class="icon is-medium mt-1" name="musical-notes-outline"></ion-icon>
+                    </div>
+                    <div class="column">
+                        <span class="title has-text-white">Треков - {{ album.songs.count }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-1">
+                <div class="columns is-vcentered">
+                    <div class="column">
+                        <ion-icon id="chevron" onclick="showSongs()" class="icon is-medium mt-1" name="chevron-down"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box has-background-link-light songs {{album.pk}}" style="display: none;">
             {% for song in album.songs.all %}
-            <a href="#" class="dropdown-item">
-                {{ song }}
-            </a>
+            <div class="column">
+                <a href="{% url 'music_player:song' song.pk %}" class="subtitle has-text-centered">{{song}}</a>
+            </div>
             {% endfor %}
         </div>
     </div>

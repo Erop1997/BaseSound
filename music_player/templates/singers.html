@@ -1,11 +1,12 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="section">
+    <div class="container has-text-centered">
     <form method="get">
         <div class="field has-addons">
             <div class="control">
-                <input type="search" class="input" name="search">
+                <input type="search" placeholder="Найти исполнителя" class="input" name="search">
             </div>
             <div class="control">
                 <button class="button" type="submit">
@@ -15,6 +16,7 @@
         </div>
     </form>
 </div>
+
 
 
 
@@ -51,7 +53,7 @@
                 <div class="container has-background-link-light">
                     <div class="title is-size-5">
                         <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
-                            <ion-icon name="caret-forward-circle-outline">
+                            <ion-icon name="headset-outline">
                             </ion-icon>
                             <span class="ml-2">
                                 {{ singer.views_count }}
@@ -77,5 +79,6 @@
             {% endfor %}
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

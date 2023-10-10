@@ -8,12 +8,15 @@ class Album(models.Model):
     album_image = models.ImageField(default='ATL.jpeg')
     is_uploaded = models.BooleanField(default=False)
     album_singer = models.ForeignKey('music_player.Singer',related_name='album_singer', on_delete=models.CASCADE, null=True, blank=True)
-    
+
     def __str__(self):
         if len(self.songs.all()) > 1 or len(self.uploaded_songs.all()) > 1:
             return self.title
         else:
             return f'{self.title} - Single'
+        
+    def views_count(self):
+        return sum([i.views for i in self.songs.all()])
 
 
 class Song(models.Model):
@@ -22,7 +25,7 @@ class Song(models.Model):
     song = models.FileField()
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
     song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
-    views = models.ManyToManyField(User, related_name='song_views')
+    views = models.IntegerField(default=0)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     def __str__(self):
@@ -42,7 +45,7 @@ class Singer(models.Model):
         return self.singer_name
     
     def views_count(self):
-        return sum([i.views.count() for i in self.song_singer.all()])
+        return sum([i.views for i in self.song_singer.all()])
 
     def album_count(self):
         return len([i for i in self.album_singer.all()])        

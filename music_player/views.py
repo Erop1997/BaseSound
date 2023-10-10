@@ -12,11 +12,9 @@ def home(request):
     new_songs = list(reversed(Song.objects.all()))
     popular_songs = Song.objects.order_by('-add_my')
     length = len(new_songs)-1 if len(new_songs) < 4 else 4
-    notify = Notificaton.objects.get(notify_user = request.user)
-    notify_objects = Notification_object.objects.get(notify = notify)
-    print(notify_objects.notify_song.all())
+    
         
-    return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length, 'notify_objects':notify_objects })
+    return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
 
 
 def added(request,pk):
@@ -64,8 +62,8 @@ def songs(request):
 @login_required(login_url='/users/sign_in')
 def song(request,pk):
     music = Song.objects.get(pk=pk)
-    if request.user not in music.views.all():
-        music.views.add(request.user)
+    music.views += 1
+    music.save()
         
     return render(request, 'song.html', {'song': music})
 
@@ -95,6 +93,8 @@ def album(request,pk):
         playlist['file'] = f'/media/{song.song}'
         playlist['poster'] = f'/media/{song.album.album_image}'
         list_playlist.append(playlist)
+        song.views += 1
+        song.save()
 
     return render(request, 'album.html', {'album': album, 'list_playlist':list_playlist})
 
