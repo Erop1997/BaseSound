@@ -85,6 +85,8 @@ def albums(request):
 @login_required(login_url='/users/sign_in')
 def album(request,pk):
     album = Album.objects.get(pk=pk)
+    reviews = album_review.objects.filter(album=album)
+
     list_playlist = []
 
     for song in album.songs.all():
@@ -104,7 +106,7 @@ def album(request,pk):
         instance.save()
         return redirect('music_player:album', pk=album.pk)
     
-    return render(request, 'album.html', {'album': album, 'list_playlist':list_playlist, 'form':form})
+    return render(request, 'album.html', {'album': album, 'list_playlist':list_playlist, 'form':form, 'reviews':reviews})
 
 @login_required(login_url='/users/sign_in')
 def singers(request):
