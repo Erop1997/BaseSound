@@ -27,10 +27,11 @@ def add_album(request, pk):
     if action == 'add_alb':
             uploaded_album = Album.objects.get(pk=pk)
             uploaded_album.is_uploaded = True
+            uploaded_album.is_new = True
             uploaded_album.save()
             uploaded_songs = Uploaded_Song.objects.filter(album=uploaded_album)
             for song in uploaded_songs:
-                Song.objects.create(name = song.name, song = song.song, album = song.album, song_singer = song.album.album_singer)
+                Song.objects.create(name = song.name, song = song.song, album = song.album, song_singer = song.album.album_singer, creator = song.creator, is_new = True)
                 song.delete()
             notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = request.user))
             notify_objects.notify_album.add(uploaded_album)
@@ -52,7 +53,7 @@ def actions(request, action, pk):
     match action:
         case 'add_track':
             uploaded_song = Uploaded_Song.objects.get(pk=pk)
-            song = Song.objects.create(name = uploaded_song.name, song = uploaded_song.song, album = uploaded_song.album, song_singer = uploaded_song.album.album_singer)
+            song = Song.objects.create(name = uploaded_song.name, song = uploaded_song.song, album = uploaded_song.album, song_singer = uploaded_song.album.album_singer, creator = uploaded_song.creator, is_new = True)
             notify_objects.notify_song.add(song)
             uploaded_song.delete()
         case 'delete_track':

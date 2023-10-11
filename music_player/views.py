@@ -137,6 +137,7 @@ def upload(request, pk):
         album = Album.objects.get(pk=pk)
         instance.album = album
         instance.song_singer = album.album_singer
+        instance.creator = request.user
         instance.save()
         messages.success(request, 'Отправлено на модерацию')
         return redirect('music_player:home')
@@ -156,6 +157,7 @@ def choosing_album(request):
         created_album = Album.objects.last()
         singer_data[0].album.add(created_album)
         created_album.album_singer = singer_data[0]
+        created_album.creator = request.user
         created_album.save()
         return redirect('music_player:upload', pk=created_album.pk )
     
@@ -218,3 +220,26 @@ def playlist_creation(request,pk):
         
     songs = [i for i in Song.objects.all() if i not in playlist.songs.all()]
     return render(request, 'playlist_creation.html',{'playlist':playlist, 'songs':songs, 'modal':modal})
+
+
+def delete_notify(request, pk, object, path):
+    match object:
+        case 'song':
+            song = Song.objects.get(pk=pk)
+            notify_obj = Notification_object.objects.get(notify_song = song)
+            notify_obj.notify_song.remove(song)
+            song.is_new = False
+            song.save()
+        case 'album':
+            album = Album.objects.get(pk=pk)
+            notify_obj = Notification_object.objects.get(notify_album = album)
+            notify_obj.notify_album.remove(album)
+            album.is_new = False
+            album.save()
+    path = path.split('.')
+    if len(path) > 2:
+        pk = path[2]
+        path = f'{path[0]}:{path[1]}'
+        return redirect(path, pk=pk)
+    path = f'{path[0]}:{path[1]}'
+    return redirect(path)

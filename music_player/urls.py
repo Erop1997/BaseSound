@@ -15,4 +15,5 @@ urlpatterns = [
     path('playlist/<int:pk>', views.playlist, name='playlist'),
     path('favorite/', views.favorite, name='favorite'),
     path('playlist_creation/<int:pk>', views.playlist_creation, name='playlist_creation'),
+    path('delete_notify/<int:pk>&<str:object>&<str:path>', views.delete_notify, name='delete_notify')
 ]

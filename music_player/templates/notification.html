@@ -3,8 +3,11 @@
       <ion-icon name="notifications-outline"></ion-icon>
     </div>
     <div class="navbar-dropdown">
-      {% for notify in notify_objects.notify_song.all %}
-      <div class="navbar-item">Песня {{ notify }} была добавлена</div>
+      {% for song in added_songs %}
+      <div class="navbar-item">Песня {{ song }} была добавлена <a class="ml-2" href="{% url 'music_player:delete_notify' song.pk 'song' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
+      {% endfor %}
+      {% for album in added_albums %}
+      <div class="navbar-item">Альбом {{ album }} был добавлен<a class="ml-2" href="{% url 'music_player:delete_notify' album.pk 'album' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
       {% endfor %}
     </div>
   </div>
