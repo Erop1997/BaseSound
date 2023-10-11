@@ -34,7 +34,7 @@ RATE_CHOICES = [
 class album_review(models.Model):
     listener = models.ForeignKey(User, on_delete=models.CASCADE)
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     text = models.TextField(blank=True)
     rating = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
 

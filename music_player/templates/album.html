@@ -28,7 +28,40 @@
             <div id="player" class="mr-4">
             </div>
         </div>
-    </div>
+    </div>    
+</div>
+
+<div class="box">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+
+        {% if field.name == 'rating' %}
+        <div class="field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="control">
+                <div class="select">
+                    {{field}}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="field">
+            <label for="{{field.id_for_label}}" class="label">
+                {{field.label}}
+            </label>
+            <div class="control">
+                {{field}}
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% endfor %}
+        <button class="button is-success">
+            Отправить
+        </button>
+    </form>
 </div>
 
 
