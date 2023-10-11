@@ -18,6 +18,28 @@ class Album(models.Model):
     def views_count(self):
         return sum([i.views for i in self.songs.all()])
 
+RATE_CHOICES = [
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+    (6, '6'),
+    (7, '7'),
+    (8, '8'),
+    (9, '9'),
+    (10, '10')
+]
+
+class album_review(models.Model):
+    listener = models.ForeignKey(User, on_delete=models.CASCADE)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    text = models.TextField(blank=True)
+    rating = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
+
+    def __str__(self):
+        return f'{self.listener.username} об {self.album.title}'
 
 class Song(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='songs', null=True, blank=True)

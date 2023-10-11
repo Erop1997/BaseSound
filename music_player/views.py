@@ -96,6 +96,14 @@ def album(request,pk):
         song.views += 1
         song.save()
 
+    form = RateForm
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.listener = request.user
+        instance.album = album
+        instance.save()
+        return redirect('music_player:album', pk=pk)
+
     return render(request, 'album.html', {'album': album, 'list_playlist':list_playlist})
 
 @login_required(login_url='/users/sign_in')

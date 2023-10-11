@@ -20,3 +20,14 @@ class AlbumForm(forms.ModelForm):
         model = Album
         fields = ['title','description','singer','album_image']
 
+class RateForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea(
+        attrs={'class': 'textarea'}
+    ), label='Отзыв об альбоме можно оставить здесь')
+    rating = forms.ChoiceField(choices=RATE_CHOICES, required=True, label='Оцените альбом')
+
+    class Meta:
+        model = album_review
+        fields = ['text', 'rating']
+
+    
