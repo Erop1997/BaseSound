@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import *
 from staff.models import *
 from django.db.models import Q
+import ast
 
 from .forms import *
 
@@ -12,8 +13,6 @@ def home(request):
     new_songs = list(reversed(Song.objects.all()))
     popular_songs = Song.objects.order_by('-add_my')
     length = len(new_songs)-1 if len(new_songs) < 4 else 4
-    
-        
     return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
 
 

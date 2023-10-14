@@ -58,12 +58,12 @@ def actions(request, action, pk):
             uploaded_song.delete()
         case 'delete_track':
             uploaded_song = Uploaded_Song.objects.get(pk=pk)
-            notify_objects.deleted_things += f'track.{uploaded_song},'
+            notify_objects.deleted_things += "{}'track':'{}','creator':'{}'{};".format('{',uploaded_song,uploaded_song.creator,'}')
             notify_objects.save()
             uploaded_song.delete()
         case 'delete_album':
             uploaded_album = Album.objects.get(pk=pk)
-            notify_objects.deleted_things += f'album.{uploaded_album},'
+            notify_objects.deleted_things += "{}'album':'{}','creator':'{}'{};".format('{',uploaded_album,uploaded_album.creator,'}')
             notify_objects.save()
             uploaded_album.delete()
         case 'choose':

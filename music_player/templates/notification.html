@@ -5,7 +5,7 @@
     </div>
     <div class="navbar-dropdown">
       {% for song in added_songs %}
-      <div class="navbar-item">Песня {{ song }} была добавлена <a class="ml-2" href="{% url 'music_player:delete_notify' song.pk 'song' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
+      <div class="navbar-item">Песня<a class="mx-1" href="{% url 'music_player:song' song.pk%}">{{ song }}</a>была добавлена <a class="ml-2" href="{% url 'music_player:delete_notify' song.pk 'song' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
       {% endfor %}
       {% for album in added_albums %}
       <div class="navbar-item">Альбом {{ album }} был добавлен<a class="ml-2" href="{% url 'music_player:delete_notify' album.pk 'album' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
