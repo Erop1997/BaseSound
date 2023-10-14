@@ -14,6 +14,7 @@ def notification(context):
     path = [i for i in str(request.get_full_path()).split('?') if i]
     path = [i for i in path[0].split('/') if i]
     path = '.'.join(path)
+    print(notify_objects) if added_albums or added_songs else None
 
             
     return {'notify_objects': notify_objects, 'path': path, 'deleted_objects':deleted_objects, 'added_songs':added_songs, 'added_albums':added_albums}

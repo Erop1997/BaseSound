@@ -1,3 +1,4 @@
+{% if added_albums or added_songs %}
 <div class="navbar-item has-dropdown is-hoverable">
     <div class="navbar-link">
       <ion-icon name="notifications-outline"></ion-icon>
@@ -11,3 +12,4 @@
       {% endfor %}
     </div>
   </div>
+  {% endif %}

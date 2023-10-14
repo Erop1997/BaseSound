@@ -54,13 +54,13 @@
             </div>
             <div class="column is-1">
                 <div class="columns is-vcentered">
-                    <div class="column">
-                        <ion-icon id="chevron" onclick="showSongs()" class="icon is-medium mt-1" name="chevron-down"></ion-icon>
+                    <div class="column" onclick="showSongs(this.dataset.pk)" data-pk="{{album.pk}}" >
+                        <ion-icon id="chevron" class="icon is-medium mt-1" name="chevron-down"></ion-icon>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="box has-background-link-light songs {{album.pk}}" style="display: none;">
+        <div  class="box has-background-link-light songs album-{{album.pk}}" style="display: none;">
             {% for song in album.songs.all %}
             <div class="column">
                 <a href="{% url 'music_player:song' song.pk %}" class="subtitle has-text-centered">{{song}}</a>
