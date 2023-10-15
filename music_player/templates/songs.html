@@ -61,7 +61,7 @@
                             {% if request.user in song.likes.all %}
                             <a href="{% url 'music_player:songs' %}?likes={{ song.pk }}"
                                 class="button has-background-link-light mt-2" onclick="setTimeout()">
-                                <ion-icon name="heart"></ion-icon>
+                                <ion-icon class="has-text-danger" name="heart"></ion-icon>
                             </a>
                             {% else %}
                             <a href="{% url 'music_player:songs' %}?likes={{ song.pk }}"
