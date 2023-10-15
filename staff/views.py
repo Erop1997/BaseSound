@@ -6,7 +6,7 @@ def admin(request):
     pk = request.GET.get('pk')
 
     if action:
-        actions(request, action, pk)
+        actions(action, pk)
         return redirect('staff:admin')
 
     uploaded_albums = Album.objects.filter(is_uploaded=False)
@@ -33,11 +33,11 @@ def add_album(request, pk):
             for song in uploaded_songs:
                 Song.objects.create(name = song.name, song = song.song, album = song.album, song_singer = song.album.album_singer, creator = song.creator, is_new = True)
                 song.delete()
-            notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = request.user))
+            notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = uploaded_album.creator))
             notify_objects.notify_album.add(uploaded_album)
             return redirect('staff:admin')
     elif action:
-        actions(request, action, primary_key)
+        actions(action, primary_key)
         return redirect('staff:add_album', pk=pk)
 
     for song in uploaded_tracks:
@@ -48,22 +48,24 @@ def add_album(request, pk):
         list_playlist.append(playlist)
     return render(request, 'add_album.html', {'uploaded_album':uploaded_album, 'uploaded_tracks':uploaded_tracks, 'list_playlist':list_playlist})
 
-def actions(request, action, pk):
-    notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = request.user))
+def actions(action, pk):
     match action:
         case 'add_track':
             uploaded_song = Uploaded_Song.objects.get(pk=pk)
             song = Song.objects.create(name = uploaded_song.name, song = uploaded_song.song, album = uploaded_song.album, song_singer = uploaded_song.album.album_singer, creator = uploaded_song.creator, is_new = True)
+            notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = uploaded_song.creator))
             notify_objects.notify_song.add(song)
             uploaded_song.delete()
         case 'delete_track':
             uploaded_song = Uploaded_Song.objects.get(pk=pk)
-            notify_objects.deleted_things += "{}'track':'{}','creator':'{}'{};".format('{',uploaded_song,uploaded_song.creator,'}')
+            notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = uploaded_song.creator))
+            notify_objects.deleted_things += "{}'track':'{}'{};".format('{',uploaded_song,'}')
             notify_objects.save()
             uploaded_song.delete()
         case 'delete_album':
             uploaded_album = Album.objects.get(pk=pk)
-            notify_objects.deleted_things += "{}'album':'{}','creator':'{}'{};".format('{',uploaded_album,uploaded_album.creator,'}')
+            notify_objects = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = uploaded_album.creator))
+            notify_objects.deleted_things += "{}'album':'{}'{};".format('{',uploaded_album,'}')
             notify_objects.save()
             uploaded_album.delete()
         case 'choose':

@@ -1,14 +1,20 @@
-{% if added_albums or added_songs %}
+{% if added_albums or added_songs or deleted_objects %}
 <div class="navbar-item has-dropdown is-hoverable">
     <div class="navbar-link">
       <ion-icon name="notifications-outline"></ion-icon>
     </div>
     <div class="navbar-dropdown">
       {% for song in added_songs %}
-      <div class="navbar-item">Песня<a class="mx-1" href="{% url 'music_player:song' song.pk%}">{{ song }}</a>была добавлена <a class="ml-2" href="{% url 'music_player:delete_notify' song.pk 'song' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
+      <div class="navbar-item">Трек<a class="mx-1" href="{% url 'music_player:song' song.pk%}">{{ song }}</a>был добавлен <a class="ml-2" href="{% url 'music_player:delete_notify' song.pk 'song' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
       {% endfor %}
       {% for album in added_albums %}
-      <div class="navbar-item">Альбом {{ album }} был добавлен<a class="ml-2" href="{% url 'music_player:delete_notify' album.pk 'album' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
+      <div class="navbar-item">Альбом<a class="mx-1" href="{% url 'music_player:album' album.pk%}">{{ album }}</a>был добавлен<a class="ml-2" href="{% url 'music_player:delete_notify' album.pk 'album' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
+      {% endfor %}
+      {% for del_track in deleted_tracks %}
+      <div class="navbar-item">Трек '{{del_track.track}}' не прошёл модерацию и был удалён<a class="ml-2" href="{% url 'music_player:delete_notify' del_track.track 'del_track' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
+      {% endfor %}
+      {% for del_album in deleted_albums %}
+      <div class="navbar-item">Альбом '{{del_album.album}}' не прошёл модерацию и был удалён<a class="ml-2" href="{% url 'music_player:delete_notify' del_album.album 'del_album' path %}"><ion-icon name="close-circle-outline"></ion-icon></a></div>
       {% endfor %}
     </div>
   </div>

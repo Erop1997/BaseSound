@@ -1,6 +1,7 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
+{% if favorite%}
 <div class="columns my-2">
     <div class="column">
         <div class="columns is-multiline is-centered p-4">
@@ -32,6 +33,9 @@
         </div>
     </div>
 </div>
+{% else %}
+<div class=" mt-5 is-1 title has-text-centered has-text-white">Пока тут ничего нет</div>
+{% endif %}
 {% endblock %}
 
 <!-- {% if request.user in song.add_my.all %}

@@ -235,6 +235,16 @@ def delete_notify(request, pk, object, path):
             notify_obj.notify_album.remove(album)
             album.is_new = False
             album.save()
+        case 'del_track':
+            notify_obj = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = request.user))
+            thing = "{}'track':'{}'{};".format('{',pk,'}')
+            notify_obj.deleted_things = notify_obj.deleted_things.replace(thing,'')
+            notify_obj.save()
+        case 'del_album':
+            notify_obj = Notification_object.objects.get(notify = Notificaton.objects.get(notify_user = request.user))
+            thing = "{}'album':'{}'{};".format('{',pk,'}')
+            notify_obj.deleted_things = notify_obj.deleted_things.replace(thing,'')
+            notify_obj.save()
     path = path.split('.')
     if len(path) > 2:
         pk = path[2]

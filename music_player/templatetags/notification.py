@@ -17,7 +17,5 @@ def notification(context):
     path = '.'.join(path)
     deleted_tracks = [ast.literal_eval(i) for i in deleted_objects if 'track' in i]
     deleted_albums = [ast.literal_eval(i) for i in deleted_objects if 'album' in i]
-    print(deleted_tracks)
-    print(deleted_albums)
             
-    return {'notify_objects': notify_objects, 'path': path, 'deleted_objects':deleted_objects, 'added_songs':added_songs, 'added_albums':added_albums}
+    return {'notify_objects': notify_objects, 'path': path, 'deleted_objects':deleted_objects, 'added_songs':added_songs, 'added_albums':added_albums, 'deleted_tracks':deleted_tracks, 'deleted_albums':deleted_albums}
