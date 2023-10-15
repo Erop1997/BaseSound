@@ -13,12 +13,11 @@ class SongForm(forms.ModelForm):
 class AlbumForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(attrs={'class':'input'}),label='Название альбома')
     description = forms.CharField(widget=forms.TextInput(attrs={'class':'input'}),label='Описание альбома')
-    singer = forms.CharField(widget=forms.TextInput(attrs={'class':'input'}),label='Исполнитель')
     album_image = forms.ImageField(label='Изображение альбома')
 
     class Meta:
         model = Album
-        fields = ['title','description','singer','album_image']
+        fields = ['title','description','album_image']
 
 class RateForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea(

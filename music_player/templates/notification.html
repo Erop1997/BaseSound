@@ -2,6 +2,9 @@
 <div class="navbar-item has-dropdown is-hoverable">
     <div class="navbar-link">
       <ion-icon name="notifications-outline"></ion-icon>
+      <span class="ml-1 tag">
+        {{ length }}
+      </span>
     </div>
     <div class="navbar-dropdown">
       {% for song in added_songs %}

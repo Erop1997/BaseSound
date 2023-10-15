@@ -1,6 +1,27 @@
 {% extends 'base_layout.html' %}
 
 {% block content %}
+<div class="modal {% if modal %} is-active {% endif %}">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box has-text-centered">
+          <form method="get" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="title is-3">
+                  Введите имя исполнителя:
+              </div>
+              <input name="singer_name" required class="input"></input>
+              <div class="title mt-2 is-6">
+                  Выберите изображение исполнителя:
+              </div>
+              <div class="mb-5"><input required type="file" name="singer_image"></div>
+              
+          <button type="submit" class="button is-success">Подтвердить</button>
+          <a href="{% url 'music_player:home' %}" class="button is-danger">Отмена</a>
+          </form>
+      </div>
+  </div>
+</div>
 <div class="box has-background-link my-5 mx-5">
 <div class="column has-text-centered">
     <div class="title has-text-white">Создайте свой альбом:</div>
