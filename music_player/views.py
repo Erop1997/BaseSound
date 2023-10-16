@@ -179,6 +179,8 @@ def choosing_album(request):
         modal = False
     albums = Album.objects.filter(is_uploaded=True)
     album_form = AlbumForm(request.POST or None, request.FILES or None)
+
+    
     if request.method == 'POST' and album_form.is_valid():
         singer_data = Singer.objects.filter(singer_name__icontains=singer_name)
         if not singer_data:
