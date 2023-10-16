@@ -53,6 +53,8 @@ class Song(models.Model):
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     creator = models.ForeignKey(User, related_name='songs', on_delete=models.CASCADE, blank=True, null=True)
     is_new = models.BooleanField(default=False)
+    likes = models.ManyToManyField(User, related_name='likes')
+    dislikes = models.ManyToManyField(User, related_name='dislikes')
 
     def __str__(self):
         return self.name
