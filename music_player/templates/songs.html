@@ -39,9 +39,15 @@
                                     <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
                                         <ion-icon name="headset-outline">
                                         </ion-icon>
-                                        <span class="ml-2">
+                                        <span class="ml-2 mr-5">
                                             {{ song.views }}
                                             </span>
+
+                                        <ion-icon name="thumbs-up-outline"></ion-icon>
+                                        <span class="ml-2 mr-2">{{ song.likes_counter }}</span>
+                                        <ion-icon name="thumbs-down-outline"></ion-icon>    
+                                        <span class="ml-2 mr-2">{{ song.dislikes_counter }}</span>
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -58,17 +64,7 @@
                                 <ion-icon name="add-outline"></ion-icon>
                             </a>
                             {% endif %}
-                            <!-- {% if request.user in song.likes.all %}
-                            <a href="{% url 'music_player:songs' %}?likes={{ song.pk }}"
-                                class="button has-background-link-light mt-2" onclick="setTimeout()">
-                                <ion-icon class="has-text-danger" name="heart"></ion-icon>
-                            </a>
-                            {% else %}
-                            <a href="{% url 'music_player:songs' %}?likes={{ song.pk }}"
-                                class="button has-background-link-light mt-2" onclick="setTimeout()">
-                                <ion-icon name="heart-outline"></ion-icon>
-                            </a>
-                            {% endif %} -->
+
                         </div>
                     </div>
                 </a>
