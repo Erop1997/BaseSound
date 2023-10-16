@@ -63,7 +63,7 @@ def song(request,pk):
     music = Song.objects.get(pk=pk)
     music.views += 1
     music.save()
-        
+
     return render(request, 'song.html', {'song': music})
 
 def like(request, pk):
@@ -91,6 +91,15 @@ def albums(request):
     albums_list = Album.objects.filter(is_uploaded = True)
     albums_list = albums_list.filter(album_singer=singer_pk) if singer_pk else albums_list
     search = request.GET.get('search')
+    # most_listened = request.GET.get('most_listened')
+    # if most_listened:
+    #     abc = []
+    #     ind = [i.views_count() for i in abc]
+        
+            
+            
+        
+    albums_list = albums_list.order_by() if most_listened else albums_list
 
     if search:
         albums_list = Album.objects.filter(

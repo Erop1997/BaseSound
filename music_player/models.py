@@ -50,7 +50,6 @@ class Song(models.Model):
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
     song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
     views = models.IntegerField(default=0)
-    #likes = models.ManyToManyField(User, related_name='likes', blank=True)
     creator = models.ForeignKey(User, related_name='songs', on_delete=models.CASCADE, blank=True, null=True)
     is_new = models.BooleanField(default=False)
     likes = models.ManyToManyField(User, related_name='likes')
