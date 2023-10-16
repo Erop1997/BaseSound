@@ -21,6 +21,27 @@
             </div>
         </div>
     </div>
+
+    <div class="columns is-centered">
+        <form action="{% url 'music_player:like' song.pk %}" method="post" class="has-text-right">
+            {% csrf_token %}
+            <button class="button {% if user in music_player.likes.all %} is-success {% endif %} " type="submit">
+                <ion-icon name="thumbs-up-outline"></ion-icon>
+                <span class="ml-3"> {{ music_player.likes_counter }}</span>
+                <span>{{ song.likes_counter }}</span>
+            </button>
+        </form>
+        <form action="{% url 'music_player:dislike' song.pk %}" method="post" class="has-text-right">
+            {% csrf_token %}
+            <button class="button {% if user in music_player.dislikes.all %} is-danger {% endif %} " type="submit">
+                <ion-icon name="thumbs-down-outline"></ion-icon>
+                <span class="ml-3"> {{ music_player.dislikes_counter }}</span>
+                <span>{{ song.dislikes_counter }}</span>
+            </button>
+        </form>
+    </div>
+    
+        
 </div>
 
 {% endblock %}

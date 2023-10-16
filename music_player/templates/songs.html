@@ -58,7 +58,7 @@
                                 <ion-icon name="add-outline"></ion-icon>
                             </a>
                             {% endif %}
-                            {% if request.user in song.likes.all %}
+                            <!-- {% if request.user in song.likes.all %}
                             <a href="{% url 'music_player:songs' %}?likes={{ song.pk }}"
                                 class="button has-background-link-light mt-2" onclick="setTimeout()">
                                 <ion-icon class="has-text-danger" name="heart"></ion-icon>
@@ -68,7 +68,7 @@
                                 class="button has-background-link-light mt-2" onclick="setTimeout()">
                                 <ion-icon name="heart-outline"></ion-icon>
                             </a>
-                            {% endif %}
+                            {% endif %} -->
                         </div>
                     </div>
                 </a>

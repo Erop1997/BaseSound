@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from staff.models import *
-from django.db.models import Q
+from django.db.models import Q, Count
 import ast
 
 from .forms import *
@@ -40,7 +40,7 @@ def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
     search = request.GET.get('search')
-    likes = request.GET.get('likes')
+    likes = request.GET.get('likes')  
 
     if search:
         songs_list = Song.objects.filter(
@@ -65,6 +65,24 @@ def song(request,pk):
     music.save()
         
     return render(request, 'song.html', {'song': music})
+
+def like(request, pk):
+    music = Song.objects.get(pk=pk)
+    if request.user not in music.likes.all():
+        music.likes.add(request.user)
+        music.dislikes.remove(request.user)
+    elif request.user in music.likes.all():
+        music.likes.remove(request.user)
+    return redirect('music_player:song', pk=pk)        
+
+def dislike(request, pk):
+    music = Song.objects.get(pk=pk)
+    if request.user not in music.dislikes.all():
+        music.dislikes.add(request.user)
+        music.likes.remove(request.user)
+    elif request.user in music.dislikes.all():
+        music.dislikes.remove(request.user)
+    return redirect('music_player:song', pk=pk)        
 
 
 @login_required(login_url='/users/sign_in')
