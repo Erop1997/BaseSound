@@ -25,14 +25,44 @@
 </div>
 <div class="box"><div class="title has-text-centered"><a href="{% url 'music_player:playlists' %}?modals=True">Создать плейлист</a></div></div>
 {% for playlist in playlists %}
-<div class="box has-background-link mx-4 my-4">
-    <div class="title has-text-centered">
-        <div class="card-image pt-2">
-            <img class="image" style="margin: auto; width: 200px; height: 200px;" src="/media/{{ playlist.playlist_image }}">
+<div class="column mx-3">
+    <div class="box has-background-link has-text-white">
+        <div class="columns is-vcentered">
+            <div class="column">
+                <a href="{% url 'music_player:playlist' playlist.pk %}">
+                    <img class="image is-128x128" style="margin: auto;" src="/media/{{ playlist.playlist_image }}">
+                </a>
+            </div>
+            <div class="column">
+                <a href="{% url 'music_player:playlist' playlist.pk %}">
+                    <div class="title has-text-centered has-text-white mt-1">{{playlist}}</div>
+                </a>
+            </div>
+            <div class="column">
+                <div class="columns is-vcentered">
+                    <div class="column is-1 mr-3">
+                        <ion-icon class="icon is-medium mt-1" name="musical-notes-outline"></ion-icon>
+                    </div>
+                    <div class="column">
+                        <span class="title has-text-white">Треков - {{ playlist.songs.count }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-1">
+                <div class="columns is-vcentered">
+                    <div class="column" onclick="showSongs(this.dataset.pk)" data-pk="{{playlist.pk}}" >
+                        <ion-icon class="icon has-text-white is-medium mt-1 chevron-{{playlist.pk}}" name="chevron-down"></ion-icon>
+                    </div>
+                </div>
+            </div>
         </div>
-        <a class="has-text-white" href="{% url 'music_player:playlist' playlist.pk %}">
-            {{ playlist }}
-        </a>
+        <div  class="box has-text-centered has-background-link-light album-{{playlist.pk}}" style="display: none;">
+            {% for song in playlist.songs.all %}
+            <div class="column">
+                <a href="{% url 'music_player:song' song.pk %}" class="subtitle is-4 has-text-centered">{{song}}</a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endfor %}

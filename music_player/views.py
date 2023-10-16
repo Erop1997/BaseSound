@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from staff.models import *
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Count
 import ast
 
 from .forms import *
@@ -91,15 +91,7 @@ def albums(request):
     albums_list = Album.objects.filter(is_uploaded = True)
     albums_list = albums_list.filter(album_singer=singer_pk) if singer_pk else albums_list
     search = request.GET.get('search')
-    # most_listened = request.GET.get('most_listened')
-    # if most_listened:
-    #     abc = []
-    #     ind = [i.views_count() for i in abc]
-        
-            
-            
-        
-    albums_list = albums_list.order_by() if most_listened else albums_list
+    # 
 
     if search:
         albums_list = Album.objects.filter(
@@ -111,7 +103,7 @@ def albums(request):
 @login_required(login_url='/users/sign_in')
 def album(request,pk):
     album = Album.objects.get(pk=pk)
-    reviews = album_review.objects.filter(album=album)
+    reviews = Album_review.objects.filter(album=album)
 
     list_playlist = []
 
