@@ -19,6 +19,9 @@ class Album(models.Model):
         
     def views_count(self):
         return sum([i.views for i in self.songs.all()])
+    
+    def songs_count(self):
+        return len(self.songs.all())
 
 RATE_CHOICES = [
     (1, '1'),

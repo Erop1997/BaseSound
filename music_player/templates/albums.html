@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="section">
-    <div class="container mt-4">
+    <div class="columns">
+    <div class="column">
         <form method="get">
             <div class="field has-addons">
                 <div class="control">
@@ -17,6 +18,21 @@
             </div>
         </form>
     </div>
+    <div class="column has-text-centered">
+        <div class="subtitle has-text-white">Фильтрация:</div>
+        <div class="tags is-centered">
+            <a class="tag" href="{% url 'music_player:albums' %}?actions=for_views">
+                По прослушиваниям
+            </a>
+            <a class="tag" href="{% url 'music_player:albums' %}?actions=for_tracks">
+                По количеству треков
+            </a>
+            <a class="tag" href="{% url 'music_player:albums' %}?actions=for_rate">
+                По рейтингу
+            </a>
+        </div>
+    </div>
+</div>
 </div>
 {% for album in albums_list %}
 <div class="column mx-3">
@@ -54,13 +70,13 @@
             </div>
             <div class="column is-1">
                 <div class="columns is-vcentered">
-                    <div class="column" onclick="showSongs(this.dataset.pk)" data-pk="{{album.pk}}" >
+                    <div class="column" onclick="showSongs(this.dataset.pk)" data-pk="{{album.pk}}">
                         <ion-icon class="icon is-medium mt-1 chevron-{{album.pk}}" name="chevron-down"></ion-icon>
                     </div>
                 </div>
             </div>
         </div>
-        <div  class="box has-background-link-light songs album-{{album.pk}}" style="display: none;">
+        <div class="box has-background-link-light songs album-{{album.pk}}" style="display: none;">
             {% for song in album.songs.all %}
             <div class="column">
                 <a href="{% url 'music_player:song' song.pk %}" class="subtitle has-text-centered">{{song}}</a>

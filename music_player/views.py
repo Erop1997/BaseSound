@@ -73,7 +73,30 @@ def albums(request):
     albums_list = Album.objects.filter(is_uploaded = True)
     albums_list = albums_list.filter(album_singer=singer_pk) if singer_pk else albums_list
     search = request.GET.get('search')
+    actions = request.GET.get('actions')
 
+    match actions:
+        case 'for_views':
+            alb_dict = {}
+            for i in albums_list:
+                alb_dict[i] = i.views_count()
+            sorted_list = []
+
+            views = sorted(alb_dict.values(), reverse=True)
+
+            while len(sorted_list) != len(albums_list):
+                for i in alb_dict.keys():
+                    if views:
+                        if alb_dict[i] == views[0]:
+                            sorted_list.append(i)
+                            views.remove(views[0])
+            albums_list = sorted_list
+        case 'for_tracks':
+            albums_list = albums_list.order_by('songs')
+        case 'for_rate':
+            albums_list.order_by('album_review')
+
+    print(albums_list)
     if search:
         albums_list = Album.objects.filter(
             Q(title__icontains = search)
