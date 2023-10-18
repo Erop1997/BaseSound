@@ -51,35 +51,31 @@
                             </a>
                             {% endif %}
                         </div>
+                        <div class="card-content has-background-link-light py-2">
+                            <div class="title is-size-5">
+                                <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
+                                    <ion-icon name="headset-outline">
+                                    </ion-icon>
+                                    <span class="ml-2">
+                                        {{ singer.views_count }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content has-background-link-light py-2">
+                            <div class="title is-size-5">
+                                <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
+                                    <ion-icon name="albums-outline">
+                                    </ion-icon>
+                                    <span class="ml-2">
+                                        {{ singer.album_count }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </a>
-
-                <div class="container has-background-link-light py-2">
-                    <div class="title is-size-5">
-                        <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
-                            <ion-icon name="headset-outline">
-                            </ion-icon>
-                            <span class="ml-2">
-                                {{ singer.views_count }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container has-background-link-light py-2">
-                    <div class="title is-size-5">
-                        <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
-                            <ion-icon name="albums-outline">
-                            </ion-icon>
-                            <span class="ml-2">
-                                {{ singer.album_count }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
             {% endfor %}
         </div>
     </div>
