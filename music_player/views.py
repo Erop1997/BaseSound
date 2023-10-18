@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from staff.models import *
-from django.db.models import Q
+from django.db.models import Q, Count, Count
 import ast
 
 from .forms import *
@@ -39,22 +39,17 @@ def favorite(request):
 def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
-    search = request.GET.get('search')
-    likes = request.GET.get('likes')
+    search = request.GET.get('search')  
 
     if search:
         songs_list = Song.objects.filter(
             Q(name__icontains = search)
         )
 
-    if likes:
-        song = Song.objects.get(pk=likes)
-        song.likes.add(request.user) if request.user not in song.likes.all() else song.likes.remove(request.user)
-        return redirect('music_player:songs')
-
     if add_to:
         added(request,add_to)
         return redirect('music_player:songs')
+        # return render(request, 'songs.html', {}) 
     
     return render(request, 'songs.html', {'songs_list':songs_list})
 
@@ -63,8 +58,26 @@ def song(request,pk):
     music = Song.objects.get(pk=pk)
     music.views += 1
     music.save()
-        
+
     return render(request, 'song.html', {'song': music})
+
+def like(request, pk):
+    music = Song.objects.get(pk=pk)
+    if request.user not in music.likes.all():
+        music.likes.add(request.user)
+        music.dislikes.remove(request.user)
+    elif request.user in music.likes.all():
+        music.likes.remove(request.user)
+    return redirect('music_player:song', pk=pk)        
+
+def dislike(request, pk):
+    music = Song.objects.get(pk=pk)
+    if request.user not in music.dislikes.all():
+        music.dislikes.add(request.user)
+        music.likes.remove(request.user)
+    elif request.user in music.dislikes.all():
+        music.dislikes.remove(request.user)
+    return redirect('music_player:song', pk=pk)        
 
 
 @login_required(login_url='/users/sign_in')
@@ -107,7 +120,7 @@ def albums(request):
 @login_required(login_url='/users/sign_in')
 def album(request,pk):
     album = Album.objects.get(pk=pk)
-    reviews = album_review.objects.filter(album=album)
+    reviews = Album_review.objects.filter(album=album)
 
     list_playlist = []
 
@@ -175,6 +188,8 @@ def choosing_album(request):
         modal = False
     albums = Album.objects.filter(is_uploaded=True)
     album_form = AlbumForm(request.POST or None, request.FILES or None)
+
+    
     if request.method == 'POST' and album_form.is_valid():
         singer_data = Singer.objects.filter(singer_name__icontains=singer_name)
         if not singer_data:

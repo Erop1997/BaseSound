@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from . import *
+
+
 
 class Album(models.Model):
     title = models.CharField(max_length=255)
@@ -22,6 +23,11 @@ class Album(models.Model):
     
     def songs_count(self):
         return len(self.songs.all())
+    def rate(self):
+        if self.album_review_set.all():
+            return round(sum([i.rating for i in self.album_review_set.all()]) / len(self.album_review_set.all()))
+        else:
+            return 0
 
 RATE_CHOICES = [
     (1, '1'),
@@ -36,7 +42,7 @@ RATE_CHOICES = [
     (10, '10')
 ]
 
-class album_review(models.Model):
+class Album_review(models.Model):
     listener = models.ForeignKey(User, on_delete=models.CASCADE)
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
@@ -53,12 +59,19 @@ class Song(models.Model):
     add_my = models.ManyToManyField(User, related_name='my_songs', blank=True)
     song_singer = models.ForeignKey('music_player.Singer', related_name='song_singer' ,on_delete=models.CASCADE, null=True, blank=True)
     views = models.IntegerField(default=0)
-    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     creator = models.ForeignKey(User, related_name='songs', on_delete=models.CASCADE, blank=True, null=True)
     is_new = models.BooleanField(default=False)
+    likes = models.ManyToManyField(User, related_name='likes')
+    dislikes = models.ManyToManyField(User, related_name='dislikes')
 
     def __str__(self):
         return self.name
+    
+    def likes_counter(self):
+        return self.likes.count()
+
+    def dislikes_counter(self):
+        return self.dislikes.count()
     
     
     
@@ -115,3 +128,4 @@ class Notification_object(models.Model):
 
     def __str__(self):
         return f'Объекты нотификации - {self.notify}'
+

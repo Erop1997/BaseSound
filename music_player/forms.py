@@ -26,7 +26,7 @@ class RateForm(forms.ModelForm):
     rating = forms.ChoiceField(choices=RATE_CHOICES, required=True, label='Оцените альбом')
 
     class Meta:
-        model = album_review
+        model = Album_review
         fields = ['text', 'rating']
 
     

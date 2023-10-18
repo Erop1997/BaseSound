@@ -15,6 +15,19 @@
                         </ion-icon>
                     </button>
                 </div>
+
+                <!--  -->
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="control">
+                        <div class="tags has-addons">
+                        <a class="tag is-link" href="{% url 'music_player:albums' %}?most_listened=True">
+                            Много слушают
+                        </a>
+                        <a class="tag is-delete"></a>
+                        </div>
+                    </div>
+                </div>    
+                <!--  -->
             </div>
         </form>
     </div>
@@ -50,7 +63,7 @@
             </div>
             <div class="column">
                 <div class="columns is-vcentered">
-                    <div class="column is-1 mr-2">
+                    <div class="column is-1 mr-5">
                         <ion-icon class="icon is-medium mt-1" name="headset-outline"></ion-icon>
                     </div>
                     <div class="column">
@@ -60,26 +73,26 @@
             </div>
             <div class="column">
                 <div class="columns is-vcentered">
-                    <div class="column is-1 mr-2">
-                        <ion-icon class="icon is-medium mt-1" name="musical-notes-outline"></ion-icon>
+                    <div class="column is-1 mr-5">
+                        <ion-icon class="icon is-medium mt-1" name="star-half-outline"></ion-icon>
                     </div>
                     <div class="column">
-                        <span class="title has-text-white">Треков - {{ album.songs.count }}</span>
+                        <span class="title has-text-white">Рейтинг - {{ album.rate }}</span>
                     </div>
                 </div>
             </div>
             <div class="column is-1">
                 <div class="columns is-vcentered">
-                    <div class="column" onclick="showSongs(this.dataset.pk)" data-pk="{{album.pk}}">
-                        <ion-icon class="icon is-medium mt-1 chevron-{{album.pk}}" name="chevron-down"></ion-icon>
+                    <div class="column" onclick="showSongs(this.dataset.pk)" data-pk="{{album.pk}}" >
+                        <ion-icon class="icon has-text-white is-medium mt-1 chevron-{{album.pk}}" name="chevron-down"></ion-icon>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="box has-background-link-light songs album-{{album.pk}}" style="display: none;">
+        <div  class="box has-text-centered has-background-link-light album-{{album.pk}}" style="display: none;">
             {% for song in album.songs.all %}
             <div class="column">
-                <a href="{% url 'music_player:song' song.pk %}" class="subtitle has-text-centered">{{song}}</a>
+                <a href="{% url 'music_player:song' song.pk %}" class="subtitle is-4 has-text-centered">{{song}}</a>
             </div>
             {% endfor %}
         </div>
