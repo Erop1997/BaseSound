@@ -39,22 +39,17 @@ def favorite(request):
 def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
-    search = request.GET.get('search')
-    likes = request.GET.get('likes')  
+    search = request.GET.get('search')  
 
     if search:
         songs_list = Song.objects.filter(
             Q(name__icontains = search)
         )
 
-    if likes:
-        song = Song.objects.get(pk=likes)
-        song.likes.add(request.user) if request.user not in song.likes.all() else song.likes.remove(request.user)
-        return redirect('music_player:songs')
-
     if add_to:
         added(request,add_to)
         return redirect('music_player:songs')
+        # return render(request, 'songs.html', {}) 
     
     return render(request, 'songs.html', {'songs_list':songs_list})
 
