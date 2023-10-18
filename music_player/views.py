@@ -55,9 +55,9 @@ def songs(request):
         case 'for_views':
             songs_list = songs_list.order_by('-views')
         case 'for_likes':
-            songs_list = songs_list.order_by('-likes')
+            songs_list = filtering(songs_list, actions)
         case 'for_dislikes':
-            songs_list = songs_list.order_by('-dislikes')
+            songs_list = filtering(songs_list, actions)
     
     return render(request, 'songs.html', {'songs_list':songs_list})
 
@@ -126,6 +126,12 @@ def filtering(albums_list, action):
         case 'for_rate':
             for i in albums_list:
                 alb_dict[i] = i.rate()
+        case 'for_likes':
+            for i in albums_list:
+                alb_dict[i] = i.likes_counter()
+        case 'for_dislikes':
+            for i in albums_list:
+                alb_dict[i] = i.dislikes_counter()
     sorted_list = []
 
     views = sorted(alb_dict.values(), reverse=True)
