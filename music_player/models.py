@@ -23,6 +23,7 @@ class Album(models.Model):
     
     def songs_count(self):
         return len(self.songs.all())
+    
     def rate(self):
         if self.album_review_set.all():
             return round(sum([i.rating for i in self.album_review_set.all()]) / len(self.album_review_set.all()))

@@ -90,24 +90,11 @@ def albums(request):
 
     match actions:
         case 'for_views':
-            alb_dict = {}
-            for i in albums_list:
-                alb_dict[i] = i.views_count()
-            sorted_list = []
-
-            views = sorted(alb_dict.values(), reverse=True)
-
-            while len(sorted_list) != len(albums_list):
-                for i in alb_dict.keys():
-                    if views:
-                        if alb_dict[i] == views[0]:
-                            sorted_list.append(i)
-                            views.remove(views[0])
-            albums_list = sorted_list
+            albums_list = filtering(albums_list, actions)
         case 'for_tracks':
-            albums_list = albums_list.order_by('songs')
+            albums_list = filtering(albums_list, actions)
         case 'for_rate':
-            albums_list.order_by('album_review')
+            albums_list = filtering(albums_list, actions)
 
     print(albums_list)
     if search:
@@ -116,6 +103,31 @@ def albums(request):
         )
 
     return render(request, 'albums.html', {'albums_list':albums_list})
+
+def filtering(albums_list, action):
+    alb_dict = {}
+    match action:
+        case 'for_views':
+            for i in albums_list:
+                alb_dict[i] = i.views_count()
+        case 'for_tracks':
+            for i in albums_list:
+                alb_dict[i] = i.songs_count()
+        case 'for_rate':
+            for i in albums_list:
+                alb_dict[i] = i.rate()
+    sorted_list = []
+
+    views = sorted(alb_dict.values(), reverse=True)
+
+    while len(sorted_list) != len(albums_list):
+        for i in alb_dict.keys():
+            if views:
+                if alb_dict[i] == views[0]:
+                    sorted_list.append(i)
+                    views.remove(views[0])
+    albums_list = sorted_list
+    return albums_list
 
 @login_required(login_url='/users/sign_in')
 def album(request,pk):
