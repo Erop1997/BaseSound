@@ -106,7 +106,6 @@ def albums(request):
         case 'for_rate':
             albums_list = filtering(albums_list, actions)
 
-    print(albums_list)
     if search:
         albums_list = Album.objects.filter(
             Q(title__icontains = search)
@@ -212,9 +211,14 @@ def choosing_album(request):
     singer_name = request.GET.get('singer_name')
     singer_image = request.GET.get('singer_image')
     
+
     if singer_name and singer_image:
         modal = False
-    albums = Album.objects.filter(is_uploaded=True)
+    singer = Singer.objects.filter(singer_name=singer_name)
+    if singer:
+        albums = Album.objects.filter(album_singer=singer[0], is_uploaded=True)
+    else:
+        albums = None
     album_form = AlbumForm(request.POST or None, request.FILES or None)
 
     

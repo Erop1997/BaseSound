@@ -17,78 +17,76 @@
 </head>
 
 <body>
-  <nav class="navbar is-link">
-    <div class="container">
-      <div id="navMenu" class="navbar-menu">
-        <div class="navbar-start">
-          <a href="{% url 'music_player:home' %}" class="navbar-item">
-            Домой
-          </a>
-        </div>
-        <div class="navbar-item">
-          <a href="{% url 'music_player:singers' %}" class="button is-link">
-            Исполнители
-          </a>
-        </div>
-        <div class="navbar-item">
-          <a href="{% url 'music_player:albums' %}" class="button is-link">
-            Альбомы
-          </a>
-        </div>
-        <div class="navbar-item">
-          <a href="{% url 'music_player:songs' %}" class="button is-link">
-            Треки
-          </a>
-        </div>
-
-
-
-        <div class="navbar-end">
-
-          {% notification %}
-
+  <nav class="navbar">
+    <nav class="navbar" style="position: fixed; width:100%; background-color: rgb(127, 172, 255);">
+      <div class="container">
+        <div id="navMenu" class="navbar-menu">
+          <div class="navbar-start">
+            <div class="navber-item">
+              <a href="{% url 'music_player:home' %}" class="button is-link mt-2">
+                Домой
+              </a>
+            </div>
+          </div>
           <div class="navbar-item">
-            <a href="{% url 'music_player:choosing_album' %}" class="button is-link">
-              Upload
+            <a href="{% url 'music_player:singers' %}" class="button is-link">
+              Исполнители
             </a>
-            {% if user.my_songs.all %}
-            <a href="{% url 'music_player:favorite' %}" class="button is-link">
-              Моя музыка
+          </div>
+          <div class="navbar-item">
+            <a href="{% url 'music_player:albums' %}" class="button is-link">
+              Альбомы
             </a>
-            {% endif %}
-            {% if user.is_authenticated %}
-            <div class="navbar-item has-dropdown is-hoverable">
-              <div class="navbar-link">
-                {{ user }}
-              </div>
-              <div class="navbar-dropdown">
-                <a href="{% url 'users:reset_password' %}" class="navbar-item">
-                  Изменить пароль
-                </a>
-                {% if user.is_staff %}
-                <a href="{% url 'staff:admin' %}" class="navbar-item">
-                  Перейти в CRM
-                </a>
-                {% endif %}
-                {% if user.user_playlist %}
-                <a href="{% url 'music_player:playlists' %}" class="navbar-item">
-                  Мои плейлисты
-                </a>
-                {% endif %}
-                <a class="navbar-item has-text-danger" href="{% url 'users:sign_out' %}">
-                  Выйти
-                </a>
+          </div>
+          <div class="navbar-item">
+            <a href="{% url 'music_player:songs' %}" class="button is-link">
+              Треки
+            </a>
+          </div>
+
+
+
+          <div class="navbar-end">
+
+            {% notification %}
+
+            <div class="navbar-item">
+              <a href="{% url 'music_player:choosing_album' %}" class="button is-link">
+                Upload
+              </a>
+              {% if user.my_songs.all %}
+              <a href="{% url 'music_player:favorite' %}" class="button is-link">
+                Моя музыка
+              </a>
+              {% endif %}
+              <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-link">
+                  {{ user }}
+                </div>
+                <div class="navbar-dropdown">
+                  <a href="{% url 'users:reset_password' %}" class="navbar-item">
+                    Изменить пароль
+                  </a>
+                  {% if user.is_staff %}
+                  <a href="{% url 'staff:admin' %}" class="navbar-item">
+                    Перейти в CRM
+                  </a>
+                  {% endif %}
+                  {% if user.user_playlist %}
+                  <a href="{% url 'music_player:playlists' %}" class="navbar-item">
+                    Мои плейлисты
+                  </a>
+                  {% endif %}
+                  <a class="navbar-item has-text-danger" href="{% url 'users:sign_out' %}">
+                    Выйти
+                  </a>
+                </div>
               </div>
             </div>
-            {% else %}
-            <a class="navbar-item" href="{% url 'users:sign_in' %}">
-              <button class="button">Войти</button>
-            </a>
-            {% endif %}
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   </nav>
 
   <section class="background hero is-fullheight-with-navbar ">

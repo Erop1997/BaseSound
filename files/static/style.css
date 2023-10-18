@@ -1,5 +1,7 @@
 .is-fullheight-with-navbar{
-    background-image: url(ATL.jpeg)
+    background-image: url(ATL.jpeg);
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .grid{

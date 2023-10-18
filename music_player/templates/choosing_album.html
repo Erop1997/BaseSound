@@ -33,6 +33,7 @@
         {% endfor %}
         <button class="button mt-4" type="submit" style="width: 25%;">Создать</button>
     </form>
+    {% if albums %}
     <div class="dropdown is-hoverable mt-4">
         <div class="dropdown-trigger">
           <button class="button has-background-link">
@@ -49,6 +50,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
 </div>
 </div>
 

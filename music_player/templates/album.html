@@ -4,16 +4,17 @@
 
 <div class="columns">
     <div class="column mt-6 ml-4">
-        <div class="box has-background-link">
+        <div class="box has-background-link" style="border-radius: 20px;">
             <div class="columns">
                 <div class="column">
                     <figure>
                         <img src="{{ album.album_image.url }}" alt="">
                     </figure>
-                    <div class="title has-text-centered has-text-white">{{ album }}</div>
                 </div>
 
                 <div class="column">
+                    <div class="title has-text-centered has-text-white">{{ album }}</div>
+                    <div class="subtitle has-text-centered has-text-white mt-1 is-size-4">Описание альбома:</div>
                     <div class="subtitle has-text-white">{{ album.description }}</div>
                 </div>
 
@@ -31,7 +32,7 @@
     </div>    
 </div>
 
-<div class="box has-background-link mt-2 ml-4 mr-4">
+<div class="box has-background-link mt-2 ml-4 mr-4" style="border-radius: 20px;">
     <form method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -68,7 +69,7 @@
             {% for review in reviews %}
             <div class="column is-4">
                 <div class="card">
-                    <div class="card-content">
+                    <div class="card-content has-background-link-light">
                         <div class="media">
                             <div class="media-content">
                                 <div class="title">{{ review.listener.username }}</div>

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="section">
-    <div class="columns">
+    <div class="columns is-vcentered">
     <div class="column">
         <form method="get">
             <div class="field has-addons">
@@ -21,13 +21,13 @@
     <div class="column has-text-centered">
         <div class="subtitle has-text-white">Фильтрация:</div>
         <div class="tags is-centered">
-            <a class="tag" href="{% url 'music_player:songs' %}?actions=for_views">
+            <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_views">
                 По прослушиваниям
             </a>
-            <a class="tag" href="{% url 'music_player:songs' %}?actions=for_likes">
+            <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_likes">
                 По лайкам
             </a>
-            <a class="tag" href="{% url 'music_player:songs' %}?actions=for_dislikes">
+            <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_dislikes">
                 По дизлайкам
             </a>
         </div>
