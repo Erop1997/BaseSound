@@ -3,7 +3,7 @@
 
 
 {% block content %}
-<div class="box has-text-centered">    
+<div class="box has-text-centered has-background-link-light" style="width: 50%; height: 100%; margin: 20px auto;">    
     <form method="post">
         <div class="title is-1">
             Авторизация
@@ -27,14 +27,12 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <div class="has-text-centered">
-            <button class="button is-success">
-                Войти
-            </button>
-        </div>
-        <div class="content has-text-centered">
-            <span>Еще не зарегистрировались?</span>
-            <br><br>
+        <button class="button is-link mt-2">
+            Войти
+        </button>
+        <div class="content mt-4">
+            <span>Ещё не зарегистрировались?</span>
+            <br>
             <a href="{% url 'users:sign_up' %}">
                 Создать аккаунт
             </a>

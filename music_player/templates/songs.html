@@ -2,11 +2,12 @@
 
 {% block content %}
 <div class="section">
-<div class="container has-text-centered">
-    <form method="get">
+    <div class="columns">
+    <div class="column">
+        <form method="get">
             <div class="field has-addons">
                 <div class="control">
-                    <input type="search" placeholder="Найти трек" class="input" name="search">
+                    <input placeholder="Найти альбом" type="search" class="input" name="search">
                 </div>
                 <div class="control">
                     <button class="button" type="submit">
@@ -15,7 +16,23 @@
                     </button>
                 </div>
             </div>
-    </form>
+        </form>
+    </div>
+    <div class="column has-text-centered">
+        <div class="subtitle has-text-white">Фильтрация:</div>
+        <div class="tags is-centered">
+            <a class="tag" href="{% url 'music_player:songs' %}?actions=for_views">
+                По прослушиваниям
+            </a>
+            <a class="tag" href="{% url 'music_player:songs' %}?actions=for_likes">
+                По лайкам
+            </a>
+            <a class="tag" href="{% url 'music_player:songs' %}?actions=for_dislikes">
+                По дизлайкам
+            </a>
+        </div>
+    </div>
+</div>
 </div>
 
 

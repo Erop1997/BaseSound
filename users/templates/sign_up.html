@@ -2,7 +2,7 @@
 <!-- Регистрация -->
 
 {% block content %}
-<div class="box has-text-centered">    
+<div class="box has-text-centered has-background-link-light" style="width: 50%; height: 100%; margin: 20px auto;">    
     <form method="post">
         <div class="title is-1">
             Регистрация
@@ -26,16 +26,14 @@
         </div>
         {% endfor %}
 
-        <div class="has-text-centered">
-            <button type="submit" class="button is-success">
-                Зарегистрироваться
-            </button>
-        </div>
-        <div class="content has-text-centered">
-            <span>Уже есть аккаунт</span>
-            <br><br>
+        <button class="button is-link mt-2">
+            Зарегистрироваться 
+        </button>
+        <div class="content mt-4">
+            <span>Уже зарегистрировались?</span>
+            <br>
             <a href="{% url 'users:sign_in' %}">
-                Авторизоваться
+                Войдите в аккаунт
             </a>
         </div>
 

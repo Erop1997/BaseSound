@@ -61,7 +61,7 @@
             Отправить
         </button>
     </form>
-
+    {% if album.album_review_set.all %}
     <div class="title has-text-white mt-2">Отзывы других пользователей</div>
     <div class="container">
         <div class="columns is-centered is-multiline">
@@ -72,9 +72,6 @@
                         <div class="media">
                             <div class="media-content">
                                 <div class="title">{{ review.listener.username }}</div>
-                                <div class="subtitle has-text-grey">
-                                    {{ review.listener.email }}
-                                </div>
                             </div>
                         </div>
                         <div class="content">
@@ -95,6 +92,7 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 </div>
 
 

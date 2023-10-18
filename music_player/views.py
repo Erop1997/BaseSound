@@ -15,7 +15,7 @@ def home(request):
     length = len(new_songs)-1 if len(new_songs) < 4 else 4
     return render(request, 'home.html', {'new_songs':new_songs, 'popular_songs':popular_songs, 'length':length})
 
-
+@login_required(login_url='/users/sign_in')
 def added(request,pk):
     song_data = Song.objects.get(pk=pk)
      
@@ -26,7 +26,7 @@ def added(request,pk):
         song_data.add_my.remove(request.user)
         messages.success(request, 'Удалено из моей музыки')
     
-
+@login_required(login_url='/users/sign_in')
 def favorite(request):
     add_to = request.GET.get('add_to')
     favorite = Song.objects.filter(add_my=request.user)
@@ -40,6 +40,7 @@ def songs(request):
     songs_list = Song.objects.all()
     add_to = request.GET.get('add_to')
     search = request.GET.get('search')  
+    actions = request.GET.get('actions')
 
     if search:
         songs_list = Song.objects.filter(
@@ -49,7 +50,14 @@ def songs(request):
     if add_to:
         added(request,add_to)
         return redirect('music_player:songs')
-        # return render(request, 'songs.html', {}) 
+    
+    match actions:
+        case 'for_views':
+            songs_list = songs_list.order_by('-views')
+        case 'for_likes':
+            songs_list = songs_list.order_by('-likes')
+        case 'for_dislikes':
+            songs_list = songs_list.order_by('-dislikes')
     
     return render(request, 'songs.html', {'songs_list':songs_list})
 
@@ -61,6 +69,7 @@ def song(request,pk):
 
     return render(request, 'song.html', {'song': music})
 
+@login_required(login_url='/users/sign_in')
 def like(request, pk):
     music = Song.objects.get(pk=pk)
     if request.user not in music.likes.all():
@@ -68,8 +77,9 @@ def like(request, pk):
         music.dislikes.remove(request.user)
     elif request.user in music.likes.all():
         music.likes.remove(request.user)
-    return redirect('music_player:song', pk=pk)        
-
+    return redirect('music_player:song', pk=pk)    
+    
+@login_required(login_url='/users/sign_in')
 def dislike(request, pk):
     music = Song.objects.get(pk=pk)
     if request.user not in music.dislikes.all():
@@ -217,6 +227,7 @@ def choosing_album(request):
     
     return render(request, 'choosing_album.html', {'albums':albums, 'album_form': album_form, 'modal':modal})
 
+@login_required(login_url='/users/sign_in')
 def playlists(request):
     modal_selection = request.GET.get('modals')
     playlist_name = request.GET.get('playlist_name')
@@ -233,6 +244,7 @@ def playlists(request):
     modal = True if modal_selection else modal
     return render(request, 'playlists.html', {'playlists':playlists,'modal':modal})
 
+@login_required(login_url='/users/sign_in')
 def playlist(request, pk):
     action = request.GET.get('action')
     playlist = Playlist.objects.get(pk=pk)
@@ -250,6 +262,7 @@ def playlist(request, pk):
         playlist_songs.append(songs)
     return render(request, 'playlist.html', {'playlist':playlist,'playlist_songs':playlist_songs})
 
+@login_required(login_url='/users/sign_in')
 def playlist_creation(request,pk):
     adding = request.GET.get('adding')
     
@@ -275,7 +288,7 @@ def playlist_creation(request,pk):
     songs = [i for i in Song.objects.all() if i not in playlist.songs.all()]
     return render(request, 'playlist_creation.html',{'playlist':playlist, 'songs':songs, 'modal':modal})
 
-
+@login_required(login_url='/users/sign_in')
 def delete_notify(request, pk, object, path):
     match object:
         case 'song':
