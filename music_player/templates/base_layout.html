@@ -55,11 +55,11 @@
                 Upload
               </a>
               {% if user.my_songs.all %}
-              <a href="{% url 'music_player:favorite' %}" class="button is-link">
+              <a href="{% url 'music_player:favorite' %}" class="button ml-2 is-link">
                 Моя музыка
               </a>
               {% endif %}
-              <div class="navbar-item has-dropdown is-hoverable">
+              <div class="navbar-item has-dropdown ml-2 is-hoverable">
                 <div class="navbar-link">
                   {{ user }}
                 </div>

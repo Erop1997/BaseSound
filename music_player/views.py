@@ -41,6 +41,9 @@ def songs(request):
     add_to = request.GET.get('add_to')
     search = request.GET.get('search')  
     actions = request.GET.get('actions')
+    filter_for_genre = request.GET.get('filter_for_genre')
+    genres = [i[0] for i in GENRES]
+ 
 
     if search:
         songs_list = Song.objects.filter(
@@ -51,6 +54,13 @@ def songs(request):
         added(request,add_to)
         return redirect('music_player:songs')
     
+    if filter_for_genre:
+        albums = Album.objects.filter(genre=filter_for_genre)
+        songs_list = []
+        for album in albums:
+            for song in album.songs.all():
+                songs_list.append(song)
+
     match actions:
         case 'for_views':
             songs_list = songs_list.order_by('-views')
@@ -59,7 +69,7 @@ def songs(request):
         case 'for_dislikes':
             songs_list = filtering(songs_list, actions)
     
-    return render(request, 'songs.html', {'songs_list':songs_list})
+    return render(request, 'songs.html', {'songs_list':songs_list, 'genres':genres})
 
 @login_required(login_url='/users/sign_in')
 def song(request,pk):

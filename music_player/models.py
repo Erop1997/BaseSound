@@ -1,7 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+GENRES = [
+    ('Хип-хоп', 'Хип-хоп'),
+    ('Рок', 'Рок'),
+    ('Поп','Поп'),
+    ('Хард-рок','Хард-рок')
+]
 
 class Album(models.Model):
     title = models.CharField(max_length=255)
@@ -11,6 +16,7 @@ class Album(models.Model):
     album_singer = models.ForeignKey('music_player.Singer',related_name='album_singer', on_delete=models.CASCADE, null=True, blank=True)
     creator = models.ForeignKey(User, related_name='albums', on_delete=models.CASCADE, blank=True, null=True)
     is_new = models.BooleanField(default=False)
+    genre = models.CharField(max_length=255, choices=GENRES)
 
     def __str__(self):
         if len(self.songs.all()) > 1 or len(self.uploaded_songs.all()) > 1:
@@ -43,6 +49,7 @@ RATE_CHOICES = [
     (10, '10')
 ]
 
+
 class Album_review(models.Model):
     listener = models.ForeignKey(User, on_delete=models.CASCADE)
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
@@ -62,8 +69,8 @@ class Song(models.Model):
     views = models.IntegerField(default=0)
     creator = models.ForeignKey(User, related_name='songs', on_delete=models.CASCADE, blank=True, null=True)
     is_new = models.BooleanField(default=False)
-    likes = models.ManyToManyField(User, related_name='likes')
-    dislikes = models.ManyToManyField(User, related_name='dislikes')
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    dislikes = models.ManyToManyField(User, related_name='dislikes', blank=True)
 
     def __str__(self):
         return self.name

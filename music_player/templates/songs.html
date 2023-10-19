@@ -3,92 +3,95 @@
 {% block content %}
 <div class="section">
     <div class="columns is-vcentered">
-    <div class="column">
-        <form method="get">
-            <div class="field has-addons">
-                <div class="control">
-                    <input placeholder="Найти альбом" type="search" class="input" name="search">
+        <div class="column">
+            <form method="get">
+                <div class="field has-addons">
+                    <div class="control">
+                        <input placeholder="Найти альбом" type="search" class="input" name="search">
+                    </div>
+                    <div class="control">
+                        <button class="button" type="submit">
+                            <ion-icon name="search-outline">
+                            </ion-icon>
+                        </button>
+                    </div>
                 </div>
-                <div class="control">
-                    <button class="button" type="submit">
-                        <ion-icon name="search-outline">
-                        </ion-icon>
-                    </button>
-                </div>
+            </form>
+        </div>
+        <div class="column has-text-centered">
+            <div class="subtitle has-text-white">Фильтрация:</div>
+            <div class="tags is-centered">
+                <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_views">
+                    По прослушиваниям
+                </a>
+                <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_likes">
+                    По лайкам
+                </a>
+                <form method="get" action="">
+                    <div class="select is-link mb-2">
+                        <select name="filter_for_genre">
+                            {% for genre in genres %}
+                            <option value="{{genre}}">{{genre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button class="button" type="submit">Фильтр</button>
+                </form>
             </div>
-        </form>
-    </div>
-    <div class="column has-text-centered">
-        <div class="subtitle has-text-white">Фильтрация:</div>
-        <div class="tags is-centered">
-            <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_views">
-                По прослушиваниям
-            </a>
-            <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_likes">
-                По лайкам
-            </a>
-            <a class="tag is-link" href="{% url 'music_player:songs' %}?actions=for_dislikes">
-                По дизлайкам
-            </a>
         </div>
     </div>
-</div>
-</div>
 
 
-<div class="columns my-2">
-    <div class="column">
-        <div class="columns is-multiline is-centered p-4">
-            {% for song in songs_list %}
-            <div class="column is-4">
-                <a href="{% url 'music_player:song' song.pk %}">
-                    <div class="card mt-2 has-background-link-light">
-                        <div class="card-image pt-2">
-                            <img class="image" style="margin: auto; width: 200px; height: 200px;"
-                                src="/media/{{ song.album.album_image }}">
-                        </div>
-                        <div class="card-content has-text-centered">
-                            <div class="title">{{ song }}</div>
-                            <div class="subtitle">{{ song.song_singer }}</div>
+<div class="columns is-multiline is-centered p-4">
+    {% for song in songs_list %}
+    <div class="column is-4">
+        <a href="{% url 'music_player:song' song.pk %}">
+            <div class="card mt-2 has-background-link-light">
+                <div class="card-image pt-2">
+                    <img class="image" style="margin: auto; width: 200px; height: 200px;"
+                        src="/media/{{ song.album.album_image }}">
+                </div>
+                <div class="card-content has-text-centered">
+                    <div class="title">{{ song }}</div>
+                    <div class="subtitle">{{ song.song_singer }}</div>
 
-                            <div class="container has-background-link-light">
-                                <div class="title is-size-5">
-                                    <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
-                                        <ion-icon name="headset-outline">
-                                        </ion-icon>
-                                        <span class="ml-2 mr-5">
-                                            {{ song.views }}
-                                            </span>
+                    <div class="container has-background-link-light">
+                        <div class="title is-size-5">
+                            <div class="columns is-gapless is-flex is-justify-content-center is-align-items-center">
+                                <ion-icon name="headset-outline">
+                                </ion-icon>
+                                <span class="ml-2 mr-5">
+                                    {{ song.views }}
+                                </span>
 
-                                        <ion-icon name="thumbs-up-outline"></ion-icon>
-                                        <span class="ml-2 mr-2">{{ song.likes_counter }}</span>
-                                        <ion-icon name="thumbs-down-outline"></ion-icon>    
-                                        <span class="ml-2 mr-2">{{ song.dislikes_counter }}</span>
-                                    
-                                    </div>
-                                </div>
+                                <ion-icon name="thumbs-up-outline"></ion-icon>
+                                <span class="ml-2 mr-2">{{ song.likes_counter }}</span>
+                                <ion-icon name="thumbs-down-outline"></ion-icon>
+                                <span class="ml-2 mr-2">{{ song.dislikes_counter }}</span>
+
                             </div>
-                            
-                            {% if request.user in song.add_my.all %}
-                            <a href="{% url 'music_player:songs' %}?add_to={{ song.pk }}" class="button mt-4 is-link"
-                                onclick="setTimeout()">
-                                <ion-icon name="checkmark-outline"></ion-icon>
-                            </a>
-
-                            {% else %}
-                            <a href="{% url 'music_player:songs' %}?add_to={{ song.pk }}"
-                                class="button has-background-link-light mt-4" onclick="setTimeout()">
-                                <ion-icon name="add-outline"></ion-icon>
-                            </a>
-                            {% endif %}
-
                         </div>
                     </div>
-                </a>
+
+                    {% if request.user in song.add_my.all %}
+                    <a href="{% url 'music_player:songs' %}?add_to={{ song.pk }}" class="button mt-4 is-link"
+                        onclick="setTimeout()">
+                        <ion-icon name="checkmark-outline"></ion-icon>
+                    </a>
+
+                    {% else %}
+                    <a href="{% url 'music_player:songs' %}?add_to={{ song.pk }}"
+                        class="button has-background-link-light mt-4" onclick="setTimeout()">
+                        <ion-icon name="add-outline"></ion-icon>
+                    </a>
+                    {% endif %}
+
+                </div>
             </div>
-            {% endfor %}
-        </div>
+        </a>
     </div>
+    {% endfor %}
+</div>
 </div>
 </div>
 {% endblock %}

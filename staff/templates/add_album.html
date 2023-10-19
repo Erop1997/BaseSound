@@ -37,7 +37,7 @@
     </div>
     <div class="buttons">
         <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=add_alb&pk={{ uploaded_album.pk }}" class="button is-primary">Добавить альбом с выбранными треками</a>
-        <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=add_alb&pk={{ uploaded_album.pk }}" class="button is-primary">Удалить альбом с выбранными треками</a>
+        <a href="{% url 'staff:add_album' uploaded_album.pk %}?action=delete_album&pk={{ uploaded_album.pk }}" class="button is-danger">Удалить альбом с выбранными треками</a>
     </div>
 </div>
 </div>

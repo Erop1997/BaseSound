@@ -4,14 +4,16 @@
 
 <div class="container mt-6 has-text-centered">
 
+    <div class="column is-centered">
     <script>
         var player = new Playerjs({ id: "player", file: "/media/{{song.song}}", poster: "/media/{{song.album.album_image}}", title: "{{ song }}" });
     </script>
-    <div id="player" style="width: 500px; height: 500px ;">
+    <div class="has-text-centered" id="player" style="width: 500px; height: 500px ; margin: auto;">
+    </div>
     </div>
 
     <div class="box has-background-link-light mt-2">
-        <div class="title is-size-4">"{{ song }}" из альбома - <a href="{% url 'music_player:home' %}">"{{ song.album }}"</a></div>
+        <div class="title is-size-4">"{{ song }}" из альбома - <a href="{% url 'music_player:album' song.album.pk %}">"{{ song.album }}"</a></div>
         <div class="title is-size-5">
             <div class="columns is-vcentered">
                 <div class="column is-7">

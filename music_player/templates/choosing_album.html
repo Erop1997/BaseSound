@@ -11,7 +11,7 @@
                   Введите имя исполнителя:
               </div>
               <input name="singer_name" required class="input"></input>
-              <div class="title mt-2 is-6">
+              <div class="title mt-4 is-6">
                   Выберите изображение исполнителя:
               </div>
               <div class="mb-5"><input required type="file" name="singer_image"></div>
@@ -28,8 +28,19 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in album_form %}
+        {% if field.name == 'genre' %}
+        <div class="field has-text-white mt-2">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="control mt-2">
+                <div class="select">
+                    {{field}}
+                </div>
+            </div>
+        </div>
+        {% else %}
         <div class="has-text-white mt-4 subtitle">{{ field.label }}</div>
         <div class="has-text-white" style="width: 50%; margin: 0px auto;">{{ field }}</div>
+        {% endif %}
         {% endfor %}
         <button class="button mt-4" type="submit" style="width: 25%;">Создать</button>
     </form>
