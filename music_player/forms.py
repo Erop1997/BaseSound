@@ -30,4 +30,12 @@ class RateForm(forms.ModelForm):
         model = Album_review
         fields = ['text', 'rating']
 
+class PlaylistCreationForm(forms.ModelForm):
+    playlist_title = forms.CharField(widget=forms.TextInput(attrs={'class':'input'}),label='Название плейлиста')
+    playlist_image = forms.ImageField(label='Изображение альбома')
+
+    class Meta:
+        model = Playlist
+        fields = ['playlist_title','playlist_image']
+
     

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="section">
-    <div class="modal {% if modal %} is-active {% endif %}">
+    <!-- <div class="modal {% if modal %} is-active {% endif %}">
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="box has-text-centered">
@@ -18,10 +18,10 @@
             </div>
         </div>
         <a href="{% url 'music_player:playlist_creation' playlist.pk %}" class="modal-close is-large"></a>
-    </div>
+    </div> -->
     <div class="title has-text-white has-text-centered">
         {{ playlist }}
-        <a href="{% url 'music_player:playlist_creation' playlist.pk %}?modals=True" class="button ml-3 is-warning"><ion-icon name="pencil-outline"></ion-icon></a>
+        <a href="{% url 'music_player:playlist_creation' %}?value={{playlist.pk}}" class="button ml-3 is-warning"><ion-icon name="pencil-outline"></ion-icon></a>
     </div>
     <div class="container">
         <div class="columns">

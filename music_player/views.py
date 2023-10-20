@@ -286,18 +286,9 @@ def playlist(request, pk):
 def playlist_creation(request,pk):
     adding = request.GET.get('adding')
     
-    playlist_name = request.GET.get('playlist_name')
     playlist = Playlist.objects.get(pk=pk)
 
-    if playlist_name:
-        playlist.playlist_title = playlist_name
-        playlist.save()
-        return redirect('music_player:playlist_creation', pk=playlist.pk)
 
-    modal = False
-    modals = request.GET.get('modals')
-    if modals:
-        modal = True
 
     if adding:
         song = Song.objects.get(pk=adding)
@@ -306,7 +297,7 @@ def playlist_creation(request,pk):
 
         
     songs = [i for i in Song.objects.all() if i not in playlist.songs.all()]
-    return render(request, 'playlist_creation.html',{'playlist':playlist, 'songs':songs, 'modal':modal})
+    return render(request, 'playlist_creation.html',{'playlist':playlist, 'songs':songs,})
 
 @login_required(login_url='/users/sign_in')
 def delete_notify(request, pk, object, path):
@@ -340,3 +331,17 @@ def delete_notify(request, pk, object, path):
         return redirect(path, pk=pk)
     path = f'{path[0]}:{path[1]}'
     return redirect(path)
+
+def playlist_name_image(request):
+    value = request.GET.get('value')
+    
+    playlist_form = PlaylistCreationForm(request.POST or None, request.FILES or None)
+
+    if request.method == 'POST' and playlist_form.is_valid():
+        instance = playlist_form.save(commit=False)
+        instance.user = request.user
+        instance.save()
+        playlist = Playlist.objects.last()
+        return redirect('music_player:playlist_creation', pk=playlist.pk)
+
+    return render(request, 'playlist_name_image.html', {'playlist_form':playlist_form})

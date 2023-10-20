@@ -17,5 +17,6 @@ urlpatterns = [
     path('playlist/<int:pk>', views.playlist, name='playlist'),
     path('favorite/', views.favorite, name='favorite'),
     path('playlist_creation/<int:pk>', views.playlist_creation, name='playlist_creation'),
-    path('delete_notify/<str:pk>&<str:object>&<str:path>', views.delete_notify, name='delete_notify')
+    path('delete_notify/<str:pk>&<str:object>&<str:path>', views.delete_notify, name='delete_notify'),
+    path('playlist_name_image/',views.playlist_name_image, name='playlist_name_image')
 ]
